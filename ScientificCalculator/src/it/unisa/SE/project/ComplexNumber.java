@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package it.unisa.SE.project;
-import java.lang.Math.*;
-import java.lang.ArithmeticException;
+
+import ProjectException.ArgumentNotDefined;
+
 /**
  *
  * @author Michela
@@ -108,9 +109,9 @@ public void setReal(Double real) {
      * return the argument of a complex number
      * @param number1
      * @return double
-     * @throws ArithmeticException
+     * @throws ProjectException.ArgumentNotDefined
      */
-    public static double arg(ComplexNumber number1) throws ArithmeticException{
+    public static double arg(ComplexNumber number1) throws ArgumentNotDefined{
         double r=number1.getReal();
         double i=number1.getImaginary();
         
@@ -121,7 +122,7 @@ public void setReal(Double real) {
             return (-Math.PI/2);
         }
         if(r==0 && i==0){
-            throw new ArithmeticException("Arg of 0 doesn't exist");
+            throw new ArgumentNotDefined("Arg of 0/0 is not defined");
         }
         if(r<0 && i>=0){
             return (Math.atan(i/r)+Math.PI);
@@ -129,10 +130,6 @@ public void setReal(Double real) {
         if(r<0 && i<0){
             return (Math.atan(i/r)-Math.PI);
         } 
-        
         return (Math.atan(i/r));
     }
-    
-    
-     
 }
