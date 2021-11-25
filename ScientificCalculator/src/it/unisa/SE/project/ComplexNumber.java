@@ -90,6 +90,27 @@ public void setReal(Double real) {
         return complexResult;
     }
 
+ 
+    /**
+     * Return the sum between two complex numbers
+     * @param number1
+     * @param number2
+     * @return ComplexNumber
+     */
+    public static ComplexNumber sum(ComplexNumber number1, ComplexNumber number2){
+        double r1=number1.getReal();
+        double i1=number1.getImaginary();
+
+        double r2=number2.getReal();
+        double i2=number2.getImaginary();
+
+        double sumReal=r1+r2;
+        double sumIm=i1+i2;
+
+        ComplexNumber complexResult=new ComplexNumber(sumReal, sumIm);
+        return complexResult;
+    }
+
    
     
      /** 
@@ -133,6 +154,19 @@ public void setReal(Double real) {
         return (Math.atan(i/r));
     }
     
-    
+     /** 
+     * Return the square root of a complex number
+     * @param number1
+     * @return ComplexNumber
+     */
+    public static ComplexNumber sqrt(ComplexNumber number1){
+        double mod=mod(number1);
+        double arg=arg(number1);
+        double realTot=Math.round((Math.sqrt(mod)*Math.cos(arg/2))*100d)/100d;
+        double immTot=Math.round((Math.sqrt(mod)*Math.sin(arg/2))*100d)/100d;
+        ComplexNumber Result=new ComplexNumber(realTot, immTot);
+        return Result;
+    }
+
      
 }

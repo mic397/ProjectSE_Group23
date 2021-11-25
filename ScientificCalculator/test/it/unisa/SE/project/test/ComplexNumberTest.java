@@ -41,6 +41,22 @@ public ComplexNumberTest() {
         number7 = new ComplexNumber(0.0, 0.0);
         
     }
+    @Test 
+    public void testSum() { 
+        ComplexNumber expected12 = new ComplexNumber(4.0, 24.0); 
+        ComplexNumber expected13 = new ComplexNumber(7.0, 7.5); 
+        ComplexNumber expected14 = new ComplexNumber(7, 15.0); 
+        ComplexNumber expected15 = new ComplexNumber(31.5, -6.0); 
+        ComplexNumber expected16 = new ComplexNumber(-6.5, -23.0); 
+         
+         
+        assertEquals(expected12, ComplexNumber.sum(number1, number2)); 
+        assertEquals(expected13, ComplexNumber.sum(number1, number5)); 
+        assertEquals(expected14, ComplexNumber.sum(number1, number7)); 
+        assertEquals(expected15, ComplexNumber.sum(number3, number4)); 
+        assertEquals(expected16, ComplexNumber.sum(number5, number6)); 
+         
+    }
 
   
      @Test
