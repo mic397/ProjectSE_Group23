@@ -75,8 +75,13 @@ public void setReal(Double real) {
         }
         return true;
     }
-    
- public static ComplexNumber sub(ComplexNumber number1, ComplexNumber number2){
+  /** 
+     * Return the subtraction between two complex numbers
+     * @param number1  first operand
+     * @param number2  second operand
+     * @return ComplexNumber
+     */  
+        public static ComplexNumber sub(ComplexNumber number1, ComplexNumber number2){
         double r1=number1.getReal();
         double i1=number1.getImaginary();
 
