@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author Michela
  */
 public class GUI extends javax.swing.JFrame {
-
+private LinkedList<ComplexNumber> stack = new LinkedList<>();
     /**
      * Creates new form GUI
      */
