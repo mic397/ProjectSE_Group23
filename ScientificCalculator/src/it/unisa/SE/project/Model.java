@@ -124,6 +124,17 @@ public class Model {
         insertComplexNumber(element2);
     } 
     
-   
+    /**
+     * "over" that pushes a copy of the second last element on the stack;
+     * @throws UnderTwoElementsException
+     */
+    
+   public void over()throws UnderTwoElementsException{ 
+        if(stack.size()<2) 
+            throw new UnderTwoElementsException(); 
+        ComplexNumber element = stack.get(stack.size() - 2); 
+         
+        insertComplexNumber(element); 
+    }
     
 }

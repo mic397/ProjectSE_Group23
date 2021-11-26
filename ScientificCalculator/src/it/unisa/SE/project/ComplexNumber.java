@@ -218,6 +218,25 @@ public void setReal(Double real) {
         ComplexNumber Result=new ComplexNumber(realTot, immTot);
         return Result;
     }
+    /**  
+     * Return the multiplication between two complex numbers 
+     * @param number1 
+     * @param number2 
+     * @return ComplexNumber 
+     */ 
+    public static ComplexNumber mul(ComplexNumber number1, ComplexNumber number2){ 
+        double a=number1.getReal(); 
+        double b=number1.getImaginary(); 
+ 
+        double c=number2.getReal(); 
+        double d=number2.getImaginary(); 
+         
+        double realTot=a*c-b*d; 
+        double immTot=a*d+b*c; 
+         
+        ComplexNumber complexResult=new ComplexNumber(realTot, immTot); 
+        return complexResult; 
+    }
 /**  
      * Return the division between two complex numbers
      * @param number1  first operan

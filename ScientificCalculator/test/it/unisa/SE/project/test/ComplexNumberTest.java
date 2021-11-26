@@ -201,7 +201,22 @@ public class ComplexNumberTest {
         assertEquals(expected5,complex5); 
     }
    
-
+@Test 
+    public void testMul(){ 
+       
+        ComplexNumber expected1=new ComplexNumber(-156.0, 18.0); 
+        ComplexNumber expected2=new ComplexNumber(0.0, 0.0); 
+        ComplexNumber expected3=new ComplexNumber(-133.25,-317.75 ); 
+        ComplexNumber expected4=new ComplexNumber( -116.25, 48.75); 
+        ComplexNumber expected5=new ComplexNumber(7.0,15.0 ); 
+         
+         
+        assertEquals(expected1, ComplexNumber.mul(number1, number2)); 
+        assertEquals(expected2, ComplexNumber.mul(number1, number7)); 
+        assertEquals(expected3, ComplexNumber.mul(number4, number6)); 
+        assertEquals(expected4, ComplexNumber.mul(number5, number6)); 
+        assertEquals(expected5, ComplexNumber.mul(number1, number10)); 
+    }
     
     @Test
     public void testDiv(){
