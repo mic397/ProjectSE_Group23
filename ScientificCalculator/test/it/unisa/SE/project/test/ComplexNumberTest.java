@@ -24,6 +24,10 @@ public class ComplexNumberTest {
     private ComplexNumber number5;
     private ComplexNumber number6;
     private ComplexNumber number7;
+    private ComplexNumber number8;
+    private ComplexNumber number9;
+    private ComplexNumber number10;
+    private ComplexNumber number11;
 
     @Before
     public void setUp() {
@@ -34,10 +38,10 @@ public class ComplexNumberTest {
         number5 = new ComplexNumber(0.0, -7.5);
         number6 = new ComplexNumber(-6.5, -15.5);
         number7 = new ComplexNumber(0.0, 0.0);
-
+        number8 = new ComplexNumber(1, 1);
+        number9 = new ComplexNumber(2, 1);
     }
 
-    
     @Test
     public void testSum() {
         ComplexNumber expected12 = new ComplexNumber(4.0, 24.0);
@@ -67,6 +71,78 @@ public class ComplexNumberTest {
         assertEquals(expected14, ComplexNumber.sub(number1, number7));
         assertEquals(expected15, ComplexNumber.sub(number3, number4));
         assertEquals(expected16, ComplexNumber.sub(number5, number6));
+    }
+
+    /**
+     * Verify that the multiplication between a complex number with real and
+     * imaginary parts equal to zero and a complex number is null.Verify that
+     * the multiplication between a complex number and the neutral value (with
+     * real part equals to one and imaginary part equal to zero) is equal to the
+     * number itself
+     *
+     * @param number1
+     * @param number2
+     */
+    @Test //Mutiply
+    public void testMultiply() {
+        //re > 0 && im > 0
+        assertEquals(new ComplexNumber(1, 3), ComplexNumber.multiply(number8, number9));
+        assertEquals(new ComplexNumber(1, 3), ComplexNumber.multiply(number9, number8));
+        //re < 0 && im > 0
+        number8.setReal(number8.getReal() * (-1));
+        number9.setReal(number9.getReal() * (-1));
+        assertEquals(new ComplexNumber(1, -3), ComplexNumber.multiply(number8, number9));
+        assertEquals(new ComplexNumber(1, -3), ComplexNumber.multiply(number9, number8));
+        //re < 0 && im < 0
+        number8.setImaginary(number8.getImaginary() * (-1));
+        number9.setImaginary(number9.getImaginary() * (-1));
+        assertEquals(new ComplexNumber(1, 3), ComplexNumber.multiply(number8, number9));
+        assertEquals(new ComplexNumber(1, 3), ComplexNumber.multiply(number9, number8));
+
+        //re > 0 && im < 0
+        number8.setReal(number8.getReal() * (-1));
+        number9.setReal(number9.getReal() * (-1));
+        assertEquals(new ComplexNumber(1, -3), ComplexNumber.multiply(number8, number9));
+        assertEquals(new ComplexNumber(1, -3), ComplexNumber.multiply(number9, number8));
+        //A -> re=0, im != 0
+        /*number8.setReal(0.0); number8.setImaginary(1.0);
+        number9.setReal(-2.0); number8.setImaginary(1.0);
+        assertEquals(new ComplexNumber(-1, -2), ComplexNumber.multiply(number8, number9));
+        assertEquals(new ComplexNumber(-1, -2), ComplexNumber.multiply(number9, number8));
+       
+        //re!=0, im = 0
+        number8.setReal(1.0); number8.setImaginary(0.0);
+        number9.setReal(-2.0); number8.setImaginary(1.0);
+        assertEquals(new ComplexNumber(-2, 1), ComplexNumber.multiply(number8, number9));
+        assertEquals(new ComplexNumber(-2, 1), ComplexNumber.multiply(number9, number8));
+        //A, B -> re!=0, A, B -> im = 0, return real number
+        complexA.setRe(1);
+        complexA.setIm(0);
+        complexB.setRe(-2);
+        complexB.setIm(0);
+        assertEquals(new Complex(-2, 0), complexA.multiply(complexB));
+        assertEquals(new Complex(-2, 0), complexB.multiply(complexA));
+        //A, B -> re=0, A, B -> im != 0, return real number
+        complexA.setRe(0);
+        complexA.setIm(1);
+        complexB.setRe(0);
+        complexB.setIm(2);
+        assertEquals(new Complex(-2, 0), complexA.multiply(complexB));
+        assertEquals(new Complex(-2, 0), complexB.multiply(complexA));
+        //A -> re=0, im=0;  return null number
+        complexA.setRe(0);
+        complexA.setIm(0);
+        complexB.setRe(1);
+        complexB.setIm(2);
+        assertEquals(new Complex(0, 0), complexA.multiply(complexB));
+        assertEquals(new Complex(0, 0), complexB.multiply(complexA));
+        //A -> re=1, im=0;  return B
+        complexA.setRe(1);
+        complexA.setIm(0);
+        complexB.setRe(1);
+        complexB.setIm(2);
+        assertEquals(complexB, complexA.multiply(complexB));
+        assertEquals(complexB, complexB.multiply(complexA));  */
     }
 
     @Test
