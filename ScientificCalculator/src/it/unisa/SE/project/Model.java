@@ -114,6 +114,10 @@ public class Model {
         return ret.toString();
     }
     
+   /**
+     * "swap" that " that exchanges the last two elements on the stack;
+     * @throws UnderTwoElementsException
+     */ 
     public void swap() throws UnderTwoElementsException{
         if(stack.size()<2)
             throw new UnderTwoElementsException();
