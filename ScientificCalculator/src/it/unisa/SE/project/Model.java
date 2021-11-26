@@ -133,10 +133,10 @@ public class Model {
      * @throws UnderTwoElementsException
      */
     
-   public void over()throws UnderTwoElementsException{ 
+   public static void over()throws UnderTwoElementsException{ 
         if(stack.size()<2) 
             throw new UnderTwoElementsException(); 
-        ComplexNumber element = stack.get(stack.size() - 2); 
+        ComplexNumber element = stack.get(stack.size() - 1); 
          
         insertComplexNumber(element); 
     }
