@@ -9,13 +9,13 @@ package ProjectException;
  *
  * @author aniel
  */
-public class ArgumentNotDefined extends Exception {
+public class ArgumentNotDefinedException extends Exception {
 
     /**
      * Creates a new instance of <code>ArgumentNotDefined</code> without detail
      * message.
      */
-    public ArgumentNotDefined() {
+    public ArgumentNotDefinedException() {
     }
 
     /**
@@ -24,7 +24,7 @@ public class ArgumentNotDefined extends Exception {
      *
      * @param msg the detail message.
      */
-    public ArgumentNotDefined(String msg) {
+    public ArgumentNotDefinedException(String msg) {
         super(msg);
     }
 }

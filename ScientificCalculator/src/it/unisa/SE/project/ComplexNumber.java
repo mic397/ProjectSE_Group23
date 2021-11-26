@@ -4,7 +4,8 @@
  */
 package it.unisa.SE.project;
 
-import ProjectException.ArgumentNotDefined;
+import ProjectException.ArgumentNotDefinedException;
+import ProjectException.notAcceptableValueException;
 
 /**
  *
@@ -77,7 +78,13 @@ public void setReal(Double real) {
         return true;
     }
     
- public static ComplexNumber sub(ComplexNumber number1, ComplexNumber number2){
+  /** 
+     * Return the subtraction between two complex numbers
+     * @param number1  first operand
+     * @param number2  second operand
+     * @return ComplexNumber
+     */  
+        public static ComplexNumber sub(ComplexNumber number1, ComplexNumber number2){
         double r1=number1.getReal();
         double i1=number1.getImaginary();
 
@@ -86,6 +93,26 @@ public void setReal(Double real) {
 
         double sumReal=r1-r2;
         double sumIm=i1-i2;
+
+        ComplexNumber complexResult=new ComplexNumber(sumReal, sumIm);
+        return complexResult;
+    }
+
+    /**
+     * Return the sum between two complex numbers
+     * @param number1
+     * @param number2
+     * @return ComplexNumber
+     */
+    public static ComplexNumber sum(ComplexNumber number1, ComplexNumber number2){
+        double r1=number1.getReal();
+        double i1=number1.getImaginary();
+
+        double r2=number2.getReal();
+        double i2=number2.getImaginary();
+
+        double sumReal=r1+r2;
+        double sumIm=i1+i2;
 
         ComplexNumber complexResult=new ComplexNumber(sumReal, sumIm);
         return complexResult;
@@ -104,14 +131,76 @@ public void setReal(Double real) {
         double mod=Math.sqrt(r1*r1+i1*i1);
         return mod;
     }
+     
+    /**
+     * @param a
+     * @param b
+     * @return the multiply operation's result between two complex numbers:
+     */
+    public static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {       
+        double real = a.getReal() * b.getReal() - a.getImaginary() * b.getImaginary();
+        double imag = a.getReal() * b.getImaginary() + a.getImaginary() * b.getReal();
+        return new ComplexNumber(real, imag);
+    }
+    
+    /**
+     * @param alpha
+     * @return the multiply operation's result between a complex number and a
+     * scale.
+     */
+    public ComplexNumber scale(double alpha) {
+        ComplexNumber complex = this;
+        return new ComplexNumber(alpha * this.getReal(), alpha * this.getImaginary());
+    }
+
+    /**
+     * @return a number with the inverted sign
+     */
+    public ComplexNumber invertSign() {
+        return this.scale(-1);
+    }
+
+    /**
+     * @param a
+     * @return the conjugate of a complex numbers:
+     */
+    public static ComplexNumber conjugate(ComplexNumber a) {
+        a.setImaginary(-a.getImaginary());
+        return new ComplexNumber(a.getReal(), a.getImaginary());
+    }
+    
+    /**
+     * @param a
+     * @return the reciprocal of complex number = z: 1/z = conjugate(z)/(re(z)^2
+     * + im(z)^2)
+     * @throws ProjectException.notAcceptableValueException
+     */
+    public static ComplexNumber reciprocal(ComplexNumber a) throws notAcceptableValueException {
+        double scale = a.getReal() * a.getReal() + a.getImaginary() * a.getImaginary();
+        if (scale == 0) {
+            //JOPtionPaneMessage->error
+            throw new notAcceptableValueException();
+        }
+        return new ComplexNumber(a.getReal() / scale, -a.getImaginary() / scale);
+    }
+    
+    /**
+     * @param a
+     * @param b
+     * @return the divide operation's result between two complex numebers :
+     * @throws ProjectException.notAcceptableValueException
+     */
+    public static ComplexNumber divides(ComplexNumber a,ComplexNumber b) throws notAcceptableValueException {
+        return ComplexNumber.multiply(a, ComplexNumber.reciprocal(b));
+    }
     
     /** 
      * return the argument of a complex number
      * @param number1
      * @return double
-     * @throws ProjectException.ArgumentNotDefined
+     * @throws ProjectException.ArgumentNotDefinedException
      */
-    public static double arg(ComplexNumber number1) throws ArgumentNotDefined{
+    public static double arg(ComplexNumber number1) throws ArgumentNotDefinedException{
         double r=number1.getReal();
         double i=number1.getImaginary();
         
@@ -122,7 +211,7 @@ public void setReal(Double real) {
             return (-Math.PI/2);
         }
         if(r==0 && i==0){
-            throw new ArgumentNotDefined("Arg of 0/0 is not defined");
+            throw new ArgumentNotDefinedException("Arg of 0/0 is not defined");
         }
         if(r<0 && i>=0){
             return (Math.atan(i/r)+Math.PI);
@@ -132,4 +221,21 @@ public void setReal(Double real) {
         } 
         return (Math.atan(i/r));
     }
+    
+     /** 
+     * Return the square root of a complex number
+     * @param number1
+     * @return ComplexNumber
+     * @throws ProjectException.ArgumentNotDefinedException
+     */
+    public static ComplexNumber sqrt(ComplexNumber number1) throws ArgumentNotDefinedException{
+        double mod = mod(number1);
+        double arg = arg(number1);
+        double realTot=Math.round((Math.sqrt(mod)*Math.cos(arg/2))*100d)/100d;
+        double immTot=Math.round((Math.sqrt(mod)*Math.sin(arg/2))*100d)/100d;
+        ComplexNumber Result=new ComplexNumber(realTot, immTot);
+        return Result;
+    }
+
+     
 }

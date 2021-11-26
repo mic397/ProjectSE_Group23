@@ -6,11 +6,6 @@ package it.unisa.SE.project.test;
 
 import it.unisa.SE.project.ComplexNumber;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -19,17 +14,17 @@ import org.junit.*;
  * @author Michela
  */
 public class ComplexNumberTest {
-public ComplexNumberTest() {
+
+    public ComplexNumberTest() {
     }
-     private ComplexNumber number1;
+    private ComplexNumber number1;
     private ComplexNumber number2;
     private ComplexNumber number3;
     private ComplexNumber number4;
     private ComplexNumber number5;
     private ComplexNumber number6;
     private ComplexNumber number7;
-    
-    
+
     @Before
     public void setUp() {
         number1 = new ComplexNumber(7.0, 15.0);
@@ -39,18 +34,34 @@ public ComplexNumberTest() {
         number5 = new ComplexNumber(0.0, -7.5);
         number6 = new ComplexNumber(-6.5, -15.5);
         number7 = new ComplexNumber(0.0, 0.0);
-        
+
     }
 
-  
-     @Test
+    
+    @Test
+    public void testSum() {
+        ComplexNumber expected12 = new ComplexNumber(4.0, 24.0);
+        ComplexNumber expected13 = new ComplexNumber(7.0, 7.5);
+        ComplexNumber expected14 = new ComplexNumber(7, 15.0);
+        ComplexNumber expected15 = new ComplexNumber(31.5, -6.0);
+        ComplexNumber expected16 = new ComplexNumber(-6.5, -23.0);
+
+        assertEquals(expected12, ComplexNumber.sum(number1, number2));
+        assertEquals(expected13, ComplexNumber.sum(number1, number5));
+        assertEquals(expected14, ComplexNumber.sum(number1, number7));
+        assertEquals(expected15, ComplexNumber.sum(number3, number4));
+        assertEquals(expected16, ComplexNumber.sum(number5, number6));
+
+    }
+
+    @Test
     public void testSub() {
         ComplexNumber expected12 = new ComplexNumber(10.0, 6.0);
         ComplexNumber expected13 = new ComplexNumber(7.0, 22.5);
-        ComplexNumber expected14 = new ComplexNumber(7.0,15.0 );
-        ComplexNumber expected15 = new ComplexNumber(-9.5,-6 );
+        ComplexNumber expected14 = new ComplexNumber(7.0, 15.0);
+        ComplexNumber expected15 = new ComplexNumber(-9.5, -6);
         ComplexNumber expected16 = new ComplexNumber(6.5, 8.0);
-        
+
         assertEquals(expected12, ComplexNumber.sub(number1, number2));
         assertEquals(expected13, ComplexNumber.sub(number1, number5));
         assertEquals(expected14, ComplexNumber.sub(number1, number7));
@@ -58,8 +69,6 @@ public ComplexNumberTest() {
         assertEquals(expected16, ComplexNumber.sub(number5, number6));
     }
 
-   
-   
     @Test
     public void testToString() {
         String expected = "5.0 + j9.0";
@@ -90,7 +99,4 @@ public ComplexNumberTest() {
         assertEquals(expected, n.toString());
 
     }
-    
-    
-
 }
