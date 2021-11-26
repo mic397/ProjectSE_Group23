@@ -152,4 +152,24 @@ public ComplexNumberTest() {
         assertEquals(expected5,Math.round(mod5*1000d)/1000d,delta);
     }
 
+    @Test
+    public void testSqrt(){
+        ComplexNumber complex1=ComplexNumber.sqrt(new ComplexNumber(5.0,10.0));
+        ComplexNumber complex2=ComplexNumber.sqrt(new ComplexNumber(-5.0,3.0));
+        ComplexNumber complex3=ComplexNumber.sqrt(new ComplexNumber(8.0,-9.0));
+        ComplexNumber complex4=ComplexNumber.sqrt(new ComplexNumber(20.5,0.0));
+        ComplexNumber complex5=ComplexNumber.sqrt(new ComplexNumber(0.0, -6.5));
+
+        ComplexNumber expected1=new ComplexNumber(2.844, 1.758);
+        ComplexNumber expected2=new ComplexNumber(0.645, 2.327);
+        ComplexNumber expected3=new ComplexNumber(3.166, -1.422);
+        ComplexNumber expected4=new ComplexNumber(4.528, 0.0);
+        ComplexNumber expected5=new ComplexNumber(1.803, -1.803);
+
+        assertEquals(expected1,complex1);
+        assertEquals(expected2,complex2);
+        assertEquals(expected3,complex3);
+        assertEquals(expected4,complex4);
+        assertEquals(expected5,complex5);
+    }
 }

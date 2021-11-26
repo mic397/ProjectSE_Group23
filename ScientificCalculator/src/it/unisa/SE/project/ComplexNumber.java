@@ -167,8 +167,8 @@ public void setReal(Double real) {
     public static ComplexNumber sqrt(ComplexNumber number1){
         double mod=mod(number1);
         double arg=arg(number1);
-        double realTot=Math.round((Math.sqrt(mod)*Math.cos(arg/2))*100d)/100d;
-        double immTot=Math.round((Math.sqrt(mod)*Math.sin(arg/2))*100d)/100d;
+        double realTot=Math.round((Math.sqrt(mod)*Math.cos(arg/2))*1000d)/1000d;
+        double immTot=Math.round((Math.sqrt(mod)*Math.sin(arg/2))*1000d)/1000d;
         ComplexNumber Result=new ComplexNumber(realTot, immTot);
         return Result;
     }
