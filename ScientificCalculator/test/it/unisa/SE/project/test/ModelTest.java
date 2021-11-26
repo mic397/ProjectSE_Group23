@@ -193,5 +193,27 @@ public class ModelTest {
     
     
     
+       
+    /**
+     * Verify that "over" that pushes a copy of the second last element on the stack
+     * @throws UnderTwoElementsException,stackIsEmptyException
+     */
+    @Test
+    public void testOver() throws UnderTwoElementsException,stackIsEmptyException {
+        this.insertValues();
+        Model.over();
+        assertEquals(number1, model.getFirstComplexNumber());
+    }
+
+    /**
+     * @throws ProjectException.UnderTwoElementsException
+     */
+    
+    @Test(expected = UnderTwoElementsException.class)
+    public void testOverLess2Elements() throws UnderTwoElementsException {
+        Model.over();
+          
+    }
+    
     
 }
