@@ -132,17 +132,7 @@ public void setReal(Double real) {
         return mod;
     }
      
-    /**
-     * @param a
-     * @param b
-     * @return the multiply operation's result between two complex numbers:
-     */
-    public static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {       
-        double real = a.getReal() * b.getReal() - a.getImaginary() * b.getImaginary();
-        double imag = a.getReal() * b.getImaginary() + a.getImaginary() * b.getReal();
-        return new ComplexNumber(real, imag);
-    }
-    
+   
     /**
      * @param alpha
      * @return the multiply operation's result between a complex number and a
@@ -184,15 +174,7 @@ public void setReal(Double real) {
         return new ComplexNumber(a.getReal() / scale, -a.getImaginary() / scale);
     }
     
-    /**
-     * @param a
-     * @param b
-     * @return the divide operation's result between two complex numebers :
-     * @throws ProjectException.notAcceptableValueException
-     */
-    public static ComplexNumber divides(ComplexNumber a,ComplexNumber b) throws notAcceptableValueException {
-        return ComplexNumber.multiply(a, ComplexNumber.reciprocal(b));
-    }
+    
     
     /** 
      * return the argument of a complex number
@@ -236,6 +218,29 @@ public void setReal(Double real) {
         ComplexNumber Result=new ComplexNumber(realTot, immTot);
         return Result;
     }
+/**  
+     * Return the division between two complex numbers
+     * @param number1  first operan
+     * @param number2  second operan
+     * @return ComplexNumber    
+     * @throws ArithmeticException Throws exceptio if second operand is 0 
+     */
+    
+    public static ComplexNumber div(ComplexNumber number1, ComplexNumber number2) throws ArithmeticException{
+        double r1=number1.getReal();
+        double i1=number1.getImaginary();
 
-     
+        double r2=number2.getReal();
+        double i2=number2.getImaginary();
+        
+        if((r2*r2+i2*i2)==0){
+            throw new ArithmeticException("Division by 0");
+        }
+        double realTot=Math.round((r1*r2+i1*i2)/(r2*r2+i2*i2)*1000d)/1000d;
+        double immTot=Math.round((i1*r2-r1*i2)/(r2*r2+i2*i2)*1000d)/1000d;
+
+        ComplexNumber complexResult=new ComplexNumber(realTot, immTot);
+        return complexResult;
+    }
+    
 }

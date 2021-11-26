@@ -6,7 +6,9 @@
 package it.unisa.SE.project;
 
 import ProjectException.stackIsEmptyException;
+import ProjectException.UnderTwoElementsException;
 import java.util.LinkedList;
+import it.unisa.SE.project.ComplexNumber;
 
 
 /**
@@ -111,4 +113,17 @@ public class Model {
         });
         return ret.toString();
     }
+    
+    public void swap() throws UnderTwoElementsException{
+        if(stack.size()<2)
+            throw new UnderTwoElementsException();
+        ComplexNumber element1 = stack.pop();
+        ComplexNumber element2 = stack.pop();
+        
+        insertComplexNumber(element1);
+        insertComplexNumber(element2);
+    } 
+    
+   
+    
 }
