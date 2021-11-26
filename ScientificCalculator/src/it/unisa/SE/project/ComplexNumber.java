@@ -141,7 +141,7 @@ public void setReal(Double real) {
         double i=number1.getImaginary();
         
         if(r==0 && i>0){
-            return (Math.PI/2*100d);
+            return (Math.PI/2*1000d);
         }
         if(r==0 && i<0){
             return (-Math.PI/2);

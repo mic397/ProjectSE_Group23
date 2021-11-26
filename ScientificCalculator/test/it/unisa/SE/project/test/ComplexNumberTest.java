@@ -107,6 +107,49 @@ public ComplexNumberTest() {
 
     }
     
-    
+    @Test
+    public void testArg(){
+        double arg1=ComplexNumber.arg(new ComplexNumber(5.0,10.0));
+        double arg2=ComplexNumber.arg(new ComplexNumber(-5.0,3.0));
+        double arg3=ComplexNumber.arg(new ComplexNumber(8.0,-9.0));
+        double arg4=ComplexNumber.arg(new ComplexNumber(20.5,0.0));
+        double arg5=ComplexNumber.arg(new ComplexNumber(0.0,-6.5));
+
+        double expected1=1.107;
+        double expected2=2.601;
+        double expected3=-0.844;
+        double expected4=0;
+        double expected5=-1.570;
+        double delta=0.5;
+        
+        assertEquals(expected1,Math.round(arg1*1000d)/1000d,delta);
+        assertEquals(expected2,Math.round(arg2*1000d)/1000d,delta);
+        assertEquals(expected3,Math.round(arg3*1000d)/1000d,delta);
+        assertEquals(expected4,Math.round(arg4*1000d)/1000d,delta);
+        assertEquals(expected5,Math.round(arg5*1000d)/1000d,delta);
+    }
+
+    @Test
+    public void testMod(){
+        double mod1=ComplexNumber.mod(new ComplexNumber(5.0,10.0));
+        double mod2=ComplexNumber.mod(new ComplexNumber(-5.0,3.0));
+        double mod3=ComplexNumber.mod(new ComplexNumber(8.0,-9.0));
+        double mod4=ComplexNumber.mod(new ComplexNumber(20.5,0.0));
+        double mod5=ComplexNumber.mod(new ComplexNumber(0.0,-6.5));
+
+        double expected1=11.180;
+        double expected2=5.830;
+        double expected3=12.041;
+        double expected4=20.5;
+        double expected5=6.5;
+        double delta=0.5;
+        
+
+        assertEquals(expected1,Math.round(mod1*1000d)/1000d,delta);
+        assertEquals(expected2,Math.round(mod2*1000d)/1000d,delta);
+        assertEquals(expected3,Math.round(mod3*1000d)/1000d,delta);
+        assertEquals(expected4,Math.round(mod4*1000d)/1000d,delta);
+        assertEquals(expected5,Math.round(mod5*1000d)/1000d,delta);
+    }
 
 }
