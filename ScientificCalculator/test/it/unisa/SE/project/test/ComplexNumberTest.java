@@ -4,6 +4,7 @@
  */
 package it.unisa.SE.project.test;
 
+import ProjectException.ArgumentNotDefinedException;
 import it.unisa.SE.project.ComplexNumber;
 
 import static org.junit.Assert.*;
@@ -174,5 +175,71 @@ public class ComplexNumberTest {
         n.setImaginary(5.7);
         assertEquals(expected, n.toString());
 
+    }
+    
+    @Test
+    public void testArg() throws ArgumentNotDefinedException{
+        double arg1=ComplexNumber.arg(new ComplexNumber(5.0,10.0));
+        double arg2=ComplexNumber.arg(new ComplexNumber(-5.0,3.0));
+        double arg3=ComplexNumber.arg(new ComplexNumber(8.0,-9.0));
+        double arg4=ComplexNumber.arg(new ComplexNumber(20.5,0.0));
+        double arg5=ComplexNumber.arg(new ComplexNumber(0.0,-6.5));
+
+        double expected1=1.107;
+        double expected2=2.601;
+        double expected3=-0.844;
+        double expected4=0;
+        double expected5=-1.570;
+        double delta=0.5;
+        
+        assertEquals(expected1,Math.round(arg1*1000d)/1000d,delta);
+        assertEquals(expected2,Math.round(arg2*1000d)/1000d,delta);
+        assertEquals(expected3,Math.round(arg3*1000d)/1000d,delta);
+        assertEquals(expected4,Math.round(arg4*1000d)/1000d,delta);
+        assertEquals(expected5,Math.round(arg5*1000d)/1000d,delta);
+    }
+
+    @Test
+    public void testMod(){
+        double mod1=ComplexNumber.mod(new ComplexNumber(5.0,10.0));
+        double mod2=ComplexNumber.mod(new ComplexNumber(-5.0,3.0));
+        double mod3=ComplexNumber.mod(new ComplexNumber(8.0,-9.0));
+        double mod4=ComplexNumber.mod(new ComplexNumber(20.5,0.0));
+        double mod5=ComplexNumber.mod(new ComplexNumber(0.0,-6.5));
+
+        double expected1=11.180;
+        double expected2=5.830;
+        double expected3=12.041;
+        double expected4=20.5;
+        double expected5=6.5;
+        double delta=0.5;
+        
+
+        assertEquals(expected1,Math.round(mod1*1000d)/1000d,delta);
+        assertEquals(expected2,Math.round(mod2*1000d)/1000d,delta);
+        assertEquals(expected3,Math.round(mod3*1000d)/1000d,delta);
+        assertEquals(expected4,Math.round(mod4*1000d)/1000d,delta);
+        assertEquals(expected5,Math.round(mod5*1000d)/1000d,delta);
+    }
+
+    @Test
+    public void testSqrt() throws ArgumentNotDefinedException{
+        ComplexNumber complex1=ComplexNumber.sqrt(new ComplexNumber(5.0,10.0));
+        ComplexNumber complex2=ComplexNumber.sqrt(new ComplexNumber(-5.0,3.0));
+        ComplexNumber complex3=ComplexNumber.sqrt(new ComplexNumber(8.0,-9.0));
+        ComplexNumber complex4=ComplexNumber.sqrt(new ComplexNumber(20.5,0.0));
+        ComplexNumber complex5=ComplexNumber.sqrt(new ComplexNumber(0.0, -6.5));
+
+        ComplexNumber expected1=new ComplexNumber(2.844, 1.758);
+        ComplexNumber expected2=new ComplexNumber(0.645, 2.327);
+        ComplexNumber expected3=new ComplexNumber(3.166, -1.422);
+        ComplexNumber expected4=new ComplexNumber(4.528, 0.0);
+        ComplexNumber expected5=new ComplexNumber(1.803, -1.803);
+
+        assertEquals(expected1,complex1);
+        assertEquals(expected2,complex2);
+        assertEquals(expected3,complex3);
+        assertEquals(expected4,complex4);
+        assertEquals(expected5,complex5);
     }
 }
