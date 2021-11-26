@@ -45,7 +45,7 @@ public class Model {
      * add a ComplexNumber on the Stack's top
      * @param a
      */
-    public void insertComplexNumber(ComplexNumber a) {
+    public static void insertComplexNumber(ComplexNumber a) {
         stack.addFirst(a);
     }
 
@@ -118,7 +118,7 @@ public class Model {
      * "swap" that " that exchanges the last two elements on the stack;
      * @throws UnderTwoElementsException
      */ 
-    public void swap() throws UnderTwoElementsException{
+    public static void swap() throws UnderTwoElementsException{
         if(stack.size()<2)
             throw new UnderTwoElementsException();
         ComplexNumber element1 = stack.pop();

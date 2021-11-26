@@ -6,6 +6,7 @@
 package it.unisa.SE.project.test;
 
 import ProjectException.stackIsEmptyException;
+import ProjectException.UnderTwoElementsException;
 import it.unisa.SE.project.ComplexNumber;
 import it.unisa.SE.project.Model;
 import org.junit.After;
@@ -165,4 +166,32 @@ public class ModelTest {
     @After
     public void tearDown() {
     }
+    
+    
+    /**
+     * Verify that "swap" operation exchanges the last two elements on the stack
+     * @throws UnderTwoElementsException,stackIsEmptyException
+     */
+    @Test
+    public void testSwap() throws UnderTwoElementsException,stackIsEmptyException {
+        this.insertValues();
+        Model.swap();
+        assertEquals(number1, model.getFirstComplexNumber());
+    }
+
+    /**
+     * @throws ProjectException.UnderTwoElementsException
+     */
+    
+    @Test(expected = UnderTwoElementsException.class)
+    public void testSwapLess2Elements() throws UnderTwoElementsException {
+        Model.swap();
+        
+        
+        
+    }
+    
+    
+    
+    
 }
