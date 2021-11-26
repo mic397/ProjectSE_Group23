@@ -179,17 +179,22 @@ public class ComplexNumberTest {
     
     @Test
     public void testArg() throws ArgumentNotDefinedException{
-        double arg1=ComplexNumber.arg(new ComplexNumber(5.0,10.0));
-        double arg2=ComplexNumber.arg(new ComplexNumber(-5.0,3.0));
-        double arg3=ComplexNumber.arg(new ComplexNumber(8.0,-9.0));
-        double arg4=ComplexNumber.arg(new ComplexNumber(20.5,0.0));
-        double arg5=ComplexNumber.arg(new ComplexNumber(0.0,-6.5));
+        double arg1=ComplexNumber.arg(number1);
+        double arg2=ComplexNumber.arg(number2);
+        double arg3=ComplexNumber.arg(number3);
+        double arg4=ComplexNumber.arg(number4);
+        double arg5=ComplexNumber.arg(number5);
+        double arg6=ComplexNumber.arg(number6);
+        
 
-        double expected1=1.107;
-        double expected2=2.601;
-        double expected3=-0.844;
+        double expected1=1.134;
+        double expected2=1.892;
+        double expected3=-0.499;
         double expected4=0;
         double expected5=-1.570;
+        double expected6=-1.968;
+              
+                
         double delta=0.5;
         
         assertEquals(expected1,Math.round(arg1*1000d)/1000d,delta);
@@ -197,21 +202,40 @@ public class ComplexNumberTest {
         assertEquals(expected3,Math.round(arg3*1000d)/1000d,delta);
         assertEquals(expected4,Math.round(arg4*1000d)/1000d,delta);
         assertEquals(expected5,Math.round(arg5*1000d)/1000d,delta);
+        assertEquals(expected6,Math.round(arg6*1000d)/1000d,delta);
+        
+        assertTrue(arg1<=Math.PI);
+        assertTrue(arg1>-Math.PI);
+        assertTrue(arg2<=Math.PI);
+        assertTrue(arg2>-Math.PI);
+        assertTrue(arg3<=Math.PI);
+        assertTrue(arg3>-Math.PI);
+        assertTrue(arg4<=Math.PI);
+        assertTrue(arg4>-Math.PI);
+        assertTrue(arg5<=Math.PI);
+        assertTrue(arg5>-Math.PI);
+        assertTrue(arg6<=Math.PI);
+        assertTrue(arg6>-Math.PI);
     }
 
     @Test
     public void testMod(){
-        double mod1=ComplexNumber.mod(new ComplexNumber(5.0,10.0));
-        double mod2=ComplexNumber.mod(new ComplexNumber(-5.0,3.0));
-        double mod3=ComplexNumber.mod(new ComplexNumber(8.0,-9.0));
-        double mod4=ComplexNumber.mod(new ComplexNumber(20.5,0.0));
-        double mod5=ComplexNumber.mod(new ComplexNumber(0.0,-6.5));
+        double mod1=ComplexNumber.mod(number1);
+        double mod2=ComplexNumber.mod(number2);
+        double mod3=ComplexNumber.mod(number3);
+        double mod4=ComplexNumber.mod(number4);
+        double mod5=ComplexNumber.mod(number5);
+        double mod6=ComplexNumber.mod(number6);
+        double mod7=ComplexNumber.mod(number7);
 
-        double expected1=11.180;
-        double expected2=5.830;
-        double expected3=12.041;
+        double expected1=16.552;
+        double expected2=9.486;
+        double expected3=12.529;
         double expected4=20.5;
-        double expected5=6.5;
+        double expected5=7.5;
+        double expected6=16.807;
+        double expected7=0;
+        
         double delta=0.5;
         
 
@@ -220,6 +244,8 @@ public class ComplexNumberTest {
         assertEquals(expected3,Math.round(mod3*1000d)/1000d,delta);
         assertEquals(expected4,Math.round(mod4*1000d)/1000d,delta);
         assertEquals(expected5,Math.round(mod5*1000d)/1000d,delta);
+        assertEquals(expected6,Math.round(mod6*1000d)/1000d,delta);
+        assertEquals(expected7,Math.round(mod7*1000d)/1000d,delta);
     }
 
     @Test
@@ -242,4 +268,5 @@ public class ComplexNumberTest {
         assertEquals(expected4,complex4);
         assertEquals(expected5,complex5);
     }
+
 }
