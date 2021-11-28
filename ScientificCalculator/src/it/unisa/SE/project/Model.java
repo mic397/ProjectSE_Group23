@@ -9,6 +9,7 @@ import ProjectException.stackIsEmptyException;
 import ProjectException.UnderTwoElementsException;
 import java.util.LinkedList;
 import it.unisa.SE.project.ComplexNumber;
+import java.util.Iterator;
 
 
 /**

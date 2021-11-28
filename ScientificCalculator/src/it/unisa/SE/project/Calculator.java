@@ -2,22 +2,20 @@
 package it.unisa.SE.project;
 
 
-import java.util.*;
+
 
 
 /**
  *
  * @author User
  */
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package it.unisa.SE.project;
+
+
 import ProjectException.*;
 import java.util.Arrays;
 import java.util.Iterator;
 import it.unisa.SE.project.*;
+import java.util.*;
 
 public class Calculator {
    
@@ -132,7 +130,7 @@ public class Calculator {
      */
     
     public ComplexNumber chooseOperation(String operation) throws stackIsEmptyException {
-        switch (op) {
+        switch (operation) {
             case "+":
                 return this.sum();
 
