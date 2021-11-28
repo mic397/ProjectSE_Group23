@@ -3,29 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package it.unisa.SE.project;
-import it.unisa.SE.project.Model;
-import java.util.LinkedList;
-import javax.swing.AbstractListModel;
+
 import ProjectException.*;
 import javax.swing.JOptionPane;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Michela
  */
 public class GUI extends javax.swing.JFrame {
-//private LinkedList<ComplexNumber> stack = new LinkedList<>();
-   private List<ComplexNumber> model = new ArrayList<>();
+
+    private Model model;
     Calculator calculator;
     private final static int maxValues = 12;
+
     /**
      * Creates new form GUI
      */
     public GUI() {
         initComponents();
+        this.jTextArea1.setEditable(false);
+        model = new Model();
         calculator = Calculator.getCalculator();
     }
 
@@ -53,10 +52,10 @@ public class GUI extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTextArea1AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -116,27 +115,23 @@ public class GUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(233, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
+                .addGap(226, 226, 226)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton2)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jButton3)
-                                    .addGap(252, 252, 252)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5)
-                                .addGap(33, 33, 33)
-                                .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4))
+                        .addGap(18, 18, 18)
+                        .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,20 +142,17 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5))
                         .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -169,133 +161,106 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void InputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputActionPerformed
-         
-        
-        
-        
-            
-        
-    
-        
-        
+
     }//GEN-LAST:event_InputActionPerformed
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
-        // TODO add your handling code here:
-        
         String text = inputField.getText();
-        
-        try{ 
-            calculator.insertValue(text);
-            
-        } catch(NumberFormatException e){
+        try {
+            calculator.processInput(text);
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "The inserted element is neither a number nor an operation!");
-            
         } catch (ArgumentNotDefinedException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-            
         } catch (ArithmeticException ex) {
             JOptionPane.showMessageDialog(rootPane, "Arithmetic Error: " + ex.getMessage());
-            
-        }catch (stackIsEmptyException ex1) {
+        } catch (stackIsEmptyException ex1) {
             JOptionPane.showMessageDialog(rootPane, "stack is empty: " + ex1.getMessage());
-        }catch (notAcceptableValueException ex2) {
+        } catch (notAcceptableValueException ex2) {
             JOptionPane.showMessageDialog(rootPane, "value not acceptable: " + ex2.getMessage());
-        }finally{
+        } finally {
             printOnTextArea();
-            
         }
-    
     }//GEN-LAST:event_insertButtonActionPerformed
 
-    private void printOnTextArea(){
-       
+    private void printOnTextArea() {
         inputField.setText(""); //clean the inputTextField
-        Iterator<ComplexNumber> iterator = calculator.getIterator();
         int value = 0;
         String str = "";
-        while (iterator.hasNext() && value < maxValues){
-            ComplexNumber a = iterator.next();
-            str = a.toString() +"\n" + str;
-            value += 1;
+        if (Model.size() <= maxValues) {
+            jTextArea1.setText(model.toString());
         }
-        jTextArea1.setText(str);
-       
     }
-    
-    
-    
-    
+
+
     private void jTextArea1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextArea1AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextArea1AncestorAdded
 
     private void sumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumActionPerformed
-        String message= "there aren't two elements to sum";
-        String message2= "stack is empty";
+        String mess = "There aren't two elements to sum them!";
+        ComplexNumber res;
         try {
-           // TODO add your handling code here:
-          ComplexNumber num=  calculator.sum();
-          
-       } catch (stackIsEmptyException ex) {
-          JOptionPane.showMessageDialog(rootPane,message2);
-       }catch(UnderTwoElementsException e1){
-           JOptionPane.showMessageDialog(rootPane,message);
-       }
-        printOnTextArea();
+            res = this.calculator.sum();
+        } catch (stackIsEmptyException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (UnderTwoElementsException ex) {
+            JOptionPane.showMessageDialog(rootPane, mess);
+        }
+        this.printOnTextArea();
     }//GEN-LAST:event_sumActionPerformed
 
     private void subActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subActionPerformed
-        // TODO add your handling code here:
-        String message= "there aren't two elements to sub";
-        String message2= "stack is empty";
+        ComplexNumber res;
+        String mess = "There aren't two elements to sub them!";
         try {
-           // TODO add your handling code here:
-          ComplexNumber num=  calculator.sub();
-          
-       } catch (stackIsEmptyException ex) {
-           JOptionPane.showMessageDialog(rootPane,ex.getMessage());
-       }catch(UnderTwoElementsException e1){
-           JOptionPane.showMessageDialog(rootPane,message);
-       }
-        printOnTextArea();
+            res = this.calculator.sub();
+        } catch (stackIsEmptyException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (UnderTwoElementsException ex) {
+            JOptionPane.showMessageDialog(rootPane, mess);
+        }
+        this.printOnTextArea();
     }//GEN-LAST:event_subActionPerformed
 
     private void mulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulActionPerformed
-        // TODO add your handling code here:
-        String message= "there aren't two elements to multiply";
-        String message2= "stack is empty";
+        ComplexNumber res;
+        String mess = "There aren't two elements to mul them!";
         try {
-           // TODO add your handling code here:
-          ComplexNumber num=  calculator.mul();
-          
-       } catch (stackIsEmptyException ex) {
-           JOptionPane.showMessageDialog(rootPane,ex.getMessage());
-       }catch(UnderTwoElementsException e1){
-           JOptionPane.showMessageDialog(rootPane,message);
-       } printOnTextArea();
+            res = this.calculator.mul();
+        } catch (stackIsEmptyException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (UnderTwoElementsException ex) {
+            JOptionPane.showMessageDialog(rootPane, mess);
+        }
+        this.printOnTextArea();
     }//GEN-LAST:event_mulActionPerformed
 
     private void divActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divActionPerformed
-        // TODO add your handling code here:
-         String message= "there aren't two elements to divide";
+        ComplexNumber res;
+        String mess = "There aren't two elements to divide them!";
+        String messDivToZero = "Division not defined";
         try {
-           // TODO add your handling code here:
-          ComplexNumber num=  calculator.div();
-          
-       } catch (stackIsEmptyException ex) {
-          JOptionPane.showMessageDialog(rootPane,ex.getMessage());
-       }catch(UnderTwoElementsException e1){
-           JOptionPane.showMessageDialog(rootPane,message);
-       } printOnTextArea();
-       
+            res = this.calculator.div();
+        } catch (stackIsEmptyException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (UnderTwoElementsException ex) {
+            JOptionPane.showMessageDialog(rootPane, mess);
+        } catch (ArithmeticException ex) {
+            JOptionPane.showMessageDialog(rootPane, messDivToZero);
+        }
+        this.printOnTextArea();
     }//GEN-LAST:event_divActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
-        // TODO add your handling code here:
-        jTextArea1.setText("");
+        try {
+            Model.clearModel();
+        } catch (stackIsEmptyException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+        this.jTextArea1.setText("");
     }//GEN-LAST:event_ClearActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
