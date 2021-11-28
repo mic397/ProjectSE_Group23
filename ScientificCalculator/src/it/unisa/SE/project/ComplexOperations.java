@@ -6,9 +6,7 @@ package it.unisa.SE.project;
 
 import ProjectException.ArgumentNotDefinedException;
 import ProjectException.notAcceptableValueException;
-import java.lang.Math;
-import java.lang.ArithmeticException;
-import it.unisa.SE.project.ComplexNumber;
+
 
 /**
  *
@@ -68,27 +66,27 @@ public class ComplexOperations {
         double mod=Math.sqrt(r1*r1+i1*i1);
         return mod;
     }
-     
-   /*
+    
     /**
+     * @param num
      * @param alpha
      * @return the multiply operation's result between a complex number and a
      * scale.
      */
-    /*
-    public ComplexNumber scale(double alpha) {
-        ComplexNumber complex = this;
-        return new ComplexNumber(alpha * this.getReal(), alpha * this.getImaginary());
+    
+    public static ComplexNumber scale(ComplexNumber num, double alpha) {
+        return new ComplexNumber(alpha * num.getReal(), alpha * num.getImaginary());
     }
-*/
+
     /**
+     * @param num
      * @return a number with the inverted sign
      */
-    /*
-    public ComplexNumber invertSign() {
-        return this.scale(-1);
+    
+    public static ComplexNumber invertSign(ComplexNumber num) {
+        return ComplexOperations.scale(num,-1);
     }
-*/
+
     /**
      * @param a
      * @return the conjugate of a complex numbers:
