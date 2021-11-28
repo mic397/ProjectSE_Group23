@@ -4,9 +4,6 @@
  */
 package it.unisa.SE.project;
 
-import ProjectException.ArgumentNotDefinedException;
-import ProjectException.notAcceptableValueException;
-
 /**
  *
  * @author Michela
@@ -50,6 +47,7 @@ public void setReal(Double real) {
             return String.valueOf(imaginary);
                 
     }
+    
     
  @Override
     public int hashCode() {
