@@ -1,160 +1,129 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package it.unisa.SE.project;
 
-
-
-
+import ProjectException.*;
 
 /**
  *
- * @author User
+ * @author Michela
  */
-
-
-import ProjectException.*;
-import java.util.Arrays;
-import java.util.Iterator;
-import it.unisa.SE.project.*;
-import java.util.*;
-
 public class Calculator {
-   
-     
+    private Model model;
     private static Calculator instance = null;
     private final ParserString parser = new ParserString();
-   
+
     public static Calculator getCalculator() {
-        if (instance == null)
+        if (instance == null) {
             instance = new Calculator();
+        }
         return instance;
     }
 
-    private Model model;
-    
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
 
     private Calculator() {
         model = new Model();
     }
-   
-   
-     public Iterator<ComplexNumber> getIterator() {
-        return model.getIterator();
-   
-   
-}
-     
-     /** 
-     * Transform the string which the user inserts into a Complex Number and then insert the number in the stack
+
+    /**
+     * Transform the string which the user inserts into a Complex Number and
+     * then insert the number in the stack
+     *
      * @param input the String that the user writes
-     * @throws NumberFormatException 
+     * @throws NumberFormatException
      * @throws ArgumentNotDefinedException
      * @throws ArithmeticException
      * @throws UnderTwoElementsException
      * @throws stackIsEmptyException
-     * @thows  notAcceptableValueException
-     * @throws ArithmeticException when a arithmetically illegal operation occurs.
+     * @throws notAcceptableValueException
+     * @throws ArithmeticException when a arithmetically illegal operation
+     * occurs.
      */
-    public void insertValue(String input) throws ArgumentNotDefinedException, NumberFormatException,ArithmeticException,UnderTwoElementsException,stackIsEmptyException, notAcceptableValueException{
-       
-            String number = parser.parserString(input);
-            
-            ComplexNumber newNumber = parser.recognizeComplexNumber(input);
-            model.push(newNumber);
-       // }
+    public void processInput(String input) throws ArgumentNotDefinedException, NumberFormatException, ArithmeticException, UnderTwoElementsException, stackIsEmptyException, notAcceptableValueException {
+        ComplexNumber newNumber = parser.recognizeComplexNumber(input);
+        Model.insertComplexNumber(newNumber);
     }
     
-    /**  
-     * Calculate the sum of the last two elements in the stack 
-     * @return result 
-     * throws stackIsEmptyException,UnderTwoElementsException
+    /**
+     * @return the sum of elements inserted by user
+     * @throws stackIsEmptyException
+     * @throws UnderTwoElementsException 
      */
-     
     public ComplexNumber sum() throws stackIsEmptyException,UnderTwoElementsException{
-        if(model.size()<2){
-            throw new UnderTwoElementsException("error");
-        }
-        ComplexNumber c1 = model.pop();
-        ComplexNumber c2 = model.pop();
-        ComplexNumber result = ComplexOperations.sum(c1, c2);
-        model.push(result);
-        return result;
+        ComplexNumber res;
+        ComplexNumber number1 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+
+        ComplexNumber number2 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+
+        res = ComplexOperations.sum(number2, number1);
+        Model.insertComplexNumber(res);
+        return res;
     }
     
-    /**  
-     * Calculate the substraction of the last two elements in the stack 
-     * @return result 
-     * throws stackIsEmptyException
+    /**
+     * @return the sub of elements inserted by user
+     * @throws stackIsEmptyException
+     * @throws UnderTwoElementsException 
      */
-     
-    public ComplexNumber sub() throws stackIsEmptyException {
-        ComplexNumber c1 = model.pop();
-        ComplexNumber c2 = model.pop();
-        ComplexNumber result = ComplexOperations.sub(c1, c2);
-        model.push(result);
-        return result;
+    public ComplexNumber sub() throws stackIsEmptyException,UnderTwoElementsException{
+        ComplexNumber res;
+        ComplexNumber number1 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+
+        ComplexNumber number2 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+
+        res = ComplexOperations.sub(number2, number1);
+        Model.insertComplexNumber(res);
+        return res;
     }
     
-    /**  
-     * Calculate the multiplication of the last two elements in the stack 
-     * @return result 
-     * throws stackIsEmptyException
+    /**
+     * @return the multiply of elements inserted by user
+     * @throws stackIsEmptyException
+     * @throws UnderTwoElementsException 
      */
-    
-    public ComplexNumber div() throws stackIsEmptyException {
-        ComplexNumber c1 = model.pop();
-        ComplexNumber c2 = model.pop();
-        ComplexNumber result = ComplexOperations.div(c1, c2);
-        model.push(result);
-        return result;
+    public ComplexNumber mul() throws stackIsEmptyException,UnderTwoElementsException{
+        ComplexNumber res;
+
+        ComplexNumber number1 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+
+        ComplexNumber number2 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+
+        res = ComplexOperations.mul(number2, number1);
+        Model.insertComplexNumber(res);
+        return res;
     }
-   
-     /**  
-     * Calculate the division of the last two elements in the stack 
-     * @return result 
-     * throws stackIsEmptyException
+    
+    /**
+     * @return the division of elements inserted by user
+     * @throws stackIsEmptyException
+     * @throws UnderTwoElementsException 
      */
-    
-    public ComplexNumber mul() throws stackIsEmptyException {
-        ComplexNumber c1 = model.pop();
-        ComplexNumber c2 = model.pop();
-        ComplexNumber result = ComplexOperations.mul(c1, c2);
-        model.push(result);
-        return result;
-    }
-    
-    
-     /**  
-     * Take in input the operation which the calculator done
-     *  return the results of the correct operations
-     * 
-     */
-    
-    public ComplexNumber chooseOperation(String operation) throws stackIsEmptyException {
-        switch (operation) {
-            case "+":
-                return this.sum();
+    public ComplexNumber div() throws ArithmeticException,stackIsEmptyException,UnderTwoElementsException{
+        ComplexNumber res;
 
-           case "-":
-                return this.sub();
+        ComplexNumber number1 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
 
-            case ":":
-                return this.div();
+        ComplexNumber number2 = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
 
-            case "x":
-                return this.mul();
-
-           /*ase "sqrt":
-                return this.squareRoot();
-
-            case "+-":
-                return this.invertSign();*/
-
-             default:
-                return null;
-
-        }
-
-    }
-     
+        res = ComplexOperations.div(number2, number1);
+        Model.insertComplexNumber(res);
+        return res;
+    } 
 }
-
