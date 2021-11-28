@@ -71,6 +71,32 @@ public class Model {
         return stack.getFirst();
     }
 
+    
+    
+    
+    /**
+    * Insert a new number on the top of the stack
+    * @param ComplexNumber number1
+    * @return true if the insert is done
+    */
+    public boolean push(ComplexNumber number1) {
+        if(number1 == null) return false;
+        stack.addLast(number1);
+        return true;
+    }
+    
+    
+    /**
+    * Delete the element on the top of the stack 
+    * @return the complex number deleted from the stack  
+    * @throws stackIsEmptykException 
+    */
+    public ComplexNumber pop() throws stackIsEmptyException{
+        if(stack.isEmpty()) throw new stackIsEmptyException();
+        ComplexNumber number1 = stack.removeLast();
+        return number1;
+    }
+
     /**
      * removes all Complex Numbers from the Stack
      * @throws stackIsEmptyException 
@@ -140,5 +166,16 @@ public class Model {
          
         insertComplexNumber(element); 
     }
+   
+   /**
+     * Method Iterator of a complex number which return an iterator  ;
+     * return itr; 
+     */
+   
+  public Iterator<ComplexNumber> getIterator(){
+        Iterator<ComplexNumber> itr=this.stack.iterator();
+        return itr;
+    }
+
     
 }
