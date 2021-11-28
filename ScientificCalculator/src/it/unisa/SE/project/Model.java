@@ -8,7 +8,6 @@ package it.unisa.SE.project;
 import ProjectException.stackIsEmptyException;
 import ProjectException.UnderTwoElementsException;
 import java.util.LinkedList;
-import it.unisa.SE.project.ComplexNumber;
 import java.util.Iterator;
 
 
@@ -70,32 +69,6 @@ public class Model {
             throw new stackIsEmptyException("Stack is empty: can't get any complex number");
         }
         return stack.getFirst();
-    }
-
-    
-    
-    
-    /**
-    * Insert a new number on the top of the stack
-    * @param ComplexNumber number1
-    * @return true if the insert is done
-    */
-    public boolean push(ComplexNumber number1) {
-        if(number1 == null) return false;
-        stack.addLast(number1);
-        return true;
-    }
-    
-    
-    /**
-    * Delete the element on the top of the stack 
-    * @return the complex number deleted from the stack  
-    * @throws stackIsEmptykException 
-    */
-    public ComplexNumber pop() throws stackIsEmptyException{
-        if(stack.isEmpty()) throw new stackIsEmptyException();
-        ComplexNumber number1 = stack.removeLast();
-        return number1;
     }
 
     /**
@@ -167,16 +140,4 @@ public class Model {
          
         insertComplexNumber(element); 
     }
-   
-   /**
-     * Method Iterator of a complex number which return an iterator  ;
-     * return itr; 
-     */
-   
-  public Iterator<ComplexNumber> getIterator(){
-        Iterator<ComplexNumber> itr=this.stack.iterator();
-        return itr;
-    }
-
-    
 }
