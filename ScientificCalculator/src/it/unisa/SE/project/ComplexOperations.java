@@ -124,7 +124,7 @@ public class ComplexOperations {
         double i=number1.getImaginary();
         
         if(r==0 && i>0){
-            return (Math.PI/2*1000d);
+            return (Math.PI/2);
         }
         if(r==0 && i<0){
             return (-Math.PI/2);
@@ -196,8 +196,8 @@ public class ComplexOperations {
         if((r2*r2+i2*i2)==0){
             throw new ArithmeticException("Division by 0");
         }
-        double realTot=Math.round((r1*r2+i1*i2)/(r2*r2+i2*i2)*1000d)/1000d;
-        double immTot=Math.round((i1*r2-r1*i2)/(r2*r2+i2*i2)*1000d)/1000d;
+        double realTot=(r1*r2+i1*i2)/(r2*r2+i2*i2);
+        double immTot=(i1*r2-r1*i2)/(r2*r2+i2*i2);
 
         ComplexNumber complexResult=new ComplexNumber(realTot, immTot);
         return complexResult;

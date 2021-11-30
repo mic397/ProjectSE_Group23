@@ -90,21 +90,21 @@ public class ComplexOperationsTest {
         double arg5 = ComplexOperations.arg(number5);
         double arg6 = ComplexOperations.arg(number6);
 
-        double expected1 = 1.134;
-        double expected2 = 1.892;
-        double expected3 = -0.499;
+        double expected1 = 1.134169167;
+        double expected2 = 1.892546881;
+        double expected3 = -0.4993467217;
         double expected4 = 0;
-        double expected5 = -1.570;
-        double expected6 = -1.968;
+        double expected5 = -1.570796327;
+        double expected6 = -1.967875772;
 
-        double delta = 0.5;
+        double delta = 0.3;
 
-        assertEquals(expected1, Math.round(arg1 * 1000d) / 1000d, delta);
-        assertEquals(expected2, Math.round(arg2 * 1000d) / 1000d, delta);
-        assertEquals(expected3, Math.round(arg3 * 1000d) / 1000d, delta);
-        assertEquals(expected4, Math.round(arg4 * 1000d) / 1000d, delta);
-        assertEquals(expected5, Math.round(arg5 * 1000d) / 1000d, delta);
-        assertEquals(expected6, Math.round(arg6 * 1000d) / 1000d, delta);
+        assertEquals(expected1,arg1,delta);
+        assertEquals(expected2, arg2, delta);
+        assertEquals(expected3, arg3, delta);
+        assertEquals(expected4, arg4, delta);
+        assertEquals(expected5, arg5 , delta);
+        assertEquals(expected6, arg6, delta);
 
         assertTrue(arg1 <= Math.PI);
         assertTrue(arg1 > -Math.PI);
@@ -130,23 +130,23 @@ public class ComplexOperationsTest {
         double mod6 = ComplexOperations.mod(number6);
         double mod7 = ComplexOperations.mod(number7);
 
-        double expected1 = 16.552;
-        double expected2 = 9.486;
-        double expected3 = 12.529;
+        double expected1 = 16.55294536;
+        double expected2 = 9.486832981;
+        double expected3 = 12.52996409;
         double expected4 = 20.5;
         double expected5 = 7.5;
-        double expected6 = 16.807;
+        double expected6 = 16.80773631;
         double expected7 = 0;
 
-        double delta = 0.5;
+        double delta = 0.3;
 
-        assertEquals(expected1, Math.round(mod1 * 1000d) / 1000d, delta);
-        assertEquals(expected2, Math.round(mod2 * 1000d) / 1000d, delta);
-        assertEquals(expected3, Math.round(mod3 * 1000d) / 1000d, delta);
-        assertEquals(expected4, Math.round(mod4 * 1000d) / 1000d, delta);
-        assertEquals(expected5, Math.round(mod5 * 1000d) / 1000d, delta);
-        assertEquals(expected6, Math.round(mod6 * 1000d) / 1000d, delta);
-        assertEquals(expected7, Math.round(mod7 * 1000d) / 1000d, delta);
+        assertEquals(expected1, mod1, delta);
+        assertEquals(expected2, mod2 , delta);
+        assertEquals(expected3, mod3, delta);
+        assertEquals(expected4, mod4, delta);
+        assertEquals(expected5, mod5, delta);
+        assertEquals(expected6, mod6 , delta);
+        assertEquals(expected7, mod7, delta);
     }
 
     @Test
@@ -196,28 +196,28 @@ public class ComplexOperationsTest {
 
     @Test
     public void testDiv() {
-        ComplexNumber expected1 = new ComplexNumber(1.267, -1.2);
+        ComplexNumber expected1 = new ComplexNumber(1.2666666666666666, -1.2);
         ComplexNumber actual1 = ComplexOperations.div(number1, number2);
-        actual1.setReal(Math.round(actual1.getReal() * 1000d) / 1000d);
-        actual1.setImaginary(Math.round(actual1.getImaginary() * 1000d) / 1000d);
+        actual1.setReal(actual1.getReal());
+        actual1.setImaginary(actual1.getImaginary());
         assertEquals(expected1, actual1);
 
         ComplexNumber expected2 = new ComplexNumber(-3.0, 9.0);
         ComplexNumber actual2 = ComplexOperations.div(number2, number10);
-        actual2.setReal(Math.round(actual2.getReal() * 1000d) / 1000d);
-        actual2.setImaginary(Math.round(actual2.getImaginary() * 1000d) / 1000d);
+        actual2.setReal(actual2.getReal());
+        actual2.setImaginary(actual2.getImaginary());
         assertEquals(expected2, actual2);
 
-        ComplexNumber expected3 = new ComplexNumber(0.0, 2.733);
+        ComplexNumber expected3 = new ComplexNumber(0.0, 2.73333333333333334);
         ComplexNumber actual3 = ComplexOperations.div(number4, number5);
-        actual3.setReal(Math.round(actual3.getReal() * 1000d) / 1000d);
-        actual3.setImaginary(Math.round(actual3.getImaginary() * 1000d) / 1000d);
+        actual3.setReal(actual3.getReal());
+        actual3.setImaginary(actual3.getImaginary());
         assertEquals(expected3, actual3);
 
-        ComplexNumber expected4 = new ComplexNumber(0.412, 0.173);
+        ComplexNumber expected4 = new ComplexNumber(0.41150442477876104, 0.17256637168141592);
         ComplexNumber actual4 = ComplexOperations.div(number5, number6);
-        actual4.setReal(Math.round(actual4.getReal() * 1000d) / 1000d);
-        actual4.setImaginary(Math.round(actual4.getImaginary() * 1000d) / 1000d);
+        actual4.setReal(actual4.getReal());
+        actual4.setImaginary(actual4.getImaginary());
         assertEquals(expected4, actual4);
     }
 
