@@ -176,7 +176,7 @@ public class ModelTest {
     public void testSwap() throws UnderTwoElementsException,stackIsEmptyException {
         this.insertValues();
         Model.swap();
-        assertEquals(number1, model.getFirstComplexNumber());
+        assertEquals(number1, Model.getFirstComplexNumber());
     }
 
     /**
@@ -184,7 +184,7 @@ public class ModelTest {
      */
     
     @Test(expected = UnderTwoElementsException.class)
-    public void testSwapLess2Elements() throws UnderTwoElementsException {
+    public void testSwapLess2Elements() throws UnderTwoElementsException,stackIsEmptyException {
         Model.swap();
         
         

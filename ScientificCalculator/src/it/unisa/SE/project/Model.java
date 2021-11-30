@@ -48,7 +48,7 @@ public class Model {
     public static void insertComplexNumber(ComplexNumber a) {
         stack.addFirst(a);
     }
-
+ 
     /** "Drop"
      * removes the Complex Number from the Stack's top
      * @throws ProjectException.stackIsEmptyException if stack is empty
@@ -109,7 +109,7 @@ public class Model {
     public String toString() {
         StringBuilder ret = new StringBuilder();
         stack.forEach(tmp -> {
-            ret.append("ComplexNumber: ").append(tmp).append("\n");
+            ret.append(tmp).append("\n");
         });
         return ret.toString();
     }
@@ -118,11 +118,14 @@ public class Model {
      * "swap" that " that exchanges the last two elements on the stack;
      * @throws UnderTwoElementsException
      */ 
-    public static void swap() throws UnderTwoElementsException{
+    public static void swap() throws UnderTwoElementsException,stackIsEmptyException{
         if(stack.size()<2)
             throw new UnderTwoElementsException();
-        ComplexNumber element1 = stack.pop();
-        ComplexNumber element2 = stack.pop();
+        if(stack.isEmpty()){
+            throw new stackIsEmptyException();
+        }
+        ComplexNumber element1 = stack.removeFirst();
+        ComplexNumber element2 = stack.removeFirst();
         
         insertComplexNumber(element1);
         insertComplexNumber(element2);
