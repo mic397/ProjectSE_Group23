@@ -136,11 +136,17 @@ public class Model {
      * @throws UnderTwoElementsException
      */
     
-   public static void over()throws UnderTwoElementsException{ 
+   public static void over()throws UnderTwoElementsException, stackIsEmptyException{ 
+       if (stack.isEmpty()) {
+            throw new stackIsEmptyException();
+        }
+       
         if(stack.size()<2) 
             throw new UnderTwoElementsException(); 
-        ComplexNumber element = stack.get(stack.size() - 1); 
-         
-        insertComplexNumber(element); 
-    }
+        ComplexNumber element = stack.removeFirst(); 
+         ComplexNumber element2 = stack.getFirst(); 
+         insertComplexNumber(element);
+        insertComplexNumber(element2); 
+    
+}
 }

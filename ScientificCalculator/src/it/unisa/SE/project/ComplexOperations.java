@@ -6,7 +6,7 @@ package it.unisa.SE.project;
 
 import ProjectException.ArgumentNotDefinedException;
 import ProjectException.notAcceptableValueException;
-
+import java.util.*;
 
 /**
  *
@@ -155,6 +155,10 @@ public class ComplexOperations {
         ComplexNumber Result=new ComplexNumber(realTot, immTot);
         return Result;
     }
+    
+     
+    
+    
     /**  
      * Return the multiplication between two complex numbers 
      * @param number1 
