@@ -11,6 +11,7 @@ import ProjectException.*;
  * @author Michela
  */
 public class Calculator {
+
     private Model model;
     private static Calculator instance = null;
     private final ParserString parser = new ParserString();
@@ -52,31 +53,37 @@ public class Calculator {
         ComplexNumber newNumber = parser.recognizeComplexNumber(input);
         Model.insertComplexNumber(newNumber);
     }
-    
+
+    public void checkDoubleOperations() {
+        if (Model.size() < 2) {
+            throw new UnderTwoElementsException("There aren't two elements to calculate them!");
+        }
+    }
+
     /**
      * @return the sum of elements inserted by user
      * @throws stackIsEmptyException
-     * @throws UnderTwoElementsException 
+     * @throws UnderTwoElementsException
      */
-    public ComplexNumber sum() throws stackIsEmptyException,UnderTwoElementsException{
+    public ComplexNumber sum() throws stackIsEmptyException, UnderTwoElementsException {
+        checkDoubleOperations();
         ComplexNumber res;
         ComplexNumber number1 = Model.getFirstComplexNumber();
         Model.removeFirstComplexNumber();
-
         ComplexNumber number2 = Model.getFirstComplexNumber();
         Model.removeFirstComplexNumber();
-
         res = ComplexOperations.sum(number2, number1);
         Model.insertComplexNumber(res);
         return res;
     }
-    
+
     /**
      * @return the sub of elements inserted by user
      * @throws stackIsEmptyException
-     * @throws UnderTwoElementsException 
+     * @throws UnderTwoElementsException
      */
-    public ComplexNumber sub() throws stackIsEmptyException,UnderTwoElementsException{
+    public ComplexNumber sub() throws stackIsEmptyException, UnderTwoElementsException {
+        checkDoubleOperations();
         ComplexNumber res;
         ComplexNumber number1 = Model.getFirstComplexNumber();
         Model.removeFirstComplexNumber();
@@ -88,13 +95,14 @@ public class Calculator {
         Model.insertComplexNumber(res);
         return res;
     }
-    
+
     /**
      * @return the multiply of elements inserted by user
      * @throws stackIsEmptyException
-     * @throws UnderTwoElementsException 
+     * @throws UnderTwoElementsException
      */
-    public ComplexNumber mul() throws stackIsEmptyException,UnderTwoElementsException{
+    public ComplexNumber mul() throws stackIsEmptyException, UnderTwoElementsException {
+        checkDoubleOperations();
         ComplexNumber res;
 
         ComplexNumber number1 = Model.getFirstComplexNumber();
@@ -107,13 +115,14 @@ public class Calculator {
         Model.insertComplexNumber(res);
         return res;
     }
-    
+
     /**
      * @return the division of elements inserted by user
      * @throws stackIsEmptyException
-     * @throws UnderTwoElementsException 
+     * @throws UnderTwoElementsException
      */
-    public ComplexNumber div() throws ArithmeticException,stackIsEmptyException,UnderTwoElementsException{
+    public ComplexNumber div() throws ArithmeticException, stackIsEmptyException, UnderTwoElementsException {
+        checkDoubleOperations();
         ComplexNumber res;
 
         ComplexNumber number1 = Model.getFirstComplexNumber();
@@ -125,5 +134,5 @@ public class Calculator {
         res = ComplexOperations.div(number2, number1);
         Model.insertComplexNumber(res);
         return res;
-    } 
+    }
 }
