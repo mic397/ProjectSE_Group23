@@ -20,7 +20,7 @@ import java.util.*;
  *
  * @author aniel
  */
-public class CalculatorTest {
+public class CalculatorTest{
 
     private Calculator calculator;
     private ComplexNumber number1 = new ComplexNumber(7.0, 15.0);
@@ -59,7 +59,7 @@ public class CalculatorTest {
      *
      * @throws ProjectException.stackIsEmptyException
      */
-    @Test(expected = stackIsEmptyException.class)
+    @Test(expected = UnderTwoElementsException.class)
     public void testSumNull() throws stackIsEmptyException {
         calculator.getModel().getStack().clear();
         calculator.sum();
@@ -80,7 +80,7 @@ public class CalculatorTest {
      *
      * @throws ProjectException.stackIsEmptyException
      */
-    @Test(expected = stackIsEmptyException.class)
+    @Test(expected = UnderTwoElementsException.class)
     public void testSubNull() throws stackIsEmptyException {
         calculator.getModel().getStack().clear();
         calculator.sub();
@@ -101,7 +101,7 @@ public class CalculatorTest {
      *
      * @throws ProjectException.stackIsEmptyException
      */
-    @Test(expected = stackIsEmptyException.class)
+    @Test(expected = UnderTwoElementsException.class)
     public void testMulNull() throws stackIsEmptyException {
         calculator.getModel().getStack().clear();
         calculator.mul();
@@ -122,14 +122,13 @@ public class CalculatorTest {
      *
      * @throws ProjectException.stackIsEmptyException
      */
-    @Test(expected = stackIsEmptyException.class)
+    @Test(expected = UnderTwoElementsException.class)
     public void testDivNull() throws stackIsEmptyException {
         calculator.getModel().getStack().clear();
         calculator.div();
     }
 
     /**
-     *
      * @throws ProjectException.stackIsEmptyException
      */
     @Test(expected = ArithmeticException.class)
@@ -153,5 +152,23 @@ public class CalculatorTest {
         calculator.getModel().getStack().push(number2);
         ComplexNumber num = calculator.div();
         assertEquals(num, ComplexOperations.div(number1, number2));
+    }
+    
+    /**
+     * 
+     */
+    @Test(expected = UnderTwoElementsException.class)
+    public void testCheckDoubleOperationsNull(){
+        calculator.getModel().getStack().clear();
+        calculator.checkDoubleOperations();
+    }
+    
+    /**
+     * 
+     */
+    @Test(expected = UnderTwoElementsException.class)
+    public void testCheckDoubleOperationsOneElement(){
+        calculator.getModel().getStack().push(number1);
+        calculator.checkDoubleOperations();
     }
 }
