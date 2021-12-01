@@ -38,8 +38,8 @@ public class ModelTest {
      * Add two number Complex in the model
      */
     public void insertValues() {
-        model.insertComplexNumber(number1);
-        model.insertComplexNumber(number2);
+        Model.insertComplexNumber(number1);
+        Model.insertComplexNumber(number2);
     }
 
     /**
@@ -186,13 +186,7 @@ public class ModelTest {
     @Test(expected = UnderTwoElementsException.class)
     public void testSwapLess2Elements() throws UnderTwoElementsException,stackIsEmptyException {
         Model.swap();
-        
-        
-        
     }
-    
-    
-    
        
     /**
      * Verify that "over" that pushes a copy of the second last element on the stack
@@ -209,11 +203,19 @@ public class ModelTest {
      * @throws ProjectException.UnderTwoElementsException
      */
     
-    @Test(expected = UnderTwoElementsException.class)
-    public void testOverLess2Elements() throws UnderTwoElementsException {
+    @Test(expected = stackIsEmptyException.class)
+    public void testOverLess2Elements() throws UnderTwoElementsException, stackIsEmptyException {
         Model.over();
-          
     }
     
+    @Test
+    public void testlastTwelveElements(){
+        StringBuilder ret = new StringBuilder();
+        for(int i=0; i < Model.getTwelveValues(); i++){
+            Model.insertComplexNumber(number1);
+            ret.append(number1).append("\n");
+        }
+        assertEquals(ret.toString(), model.lastTwelveElements());
+    }
     
 }
