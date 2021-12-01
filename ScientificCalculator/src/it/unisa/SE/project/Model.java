@@ -8,8 +8,6 @@ package it.unisa.SE.project;
 import ProjectException.stackIsEmptyException;
 import ProjectException.UnderTwoElementsException;
 import java.util.LinkedList;
-import java.util.Iterator;
-
 
 /**
  * @class Model represents the data structure internal to define a mapping of
@@ -17,7 +15,9 @@ import java.util.Iterator;
  * @author aniel
  */
 public class Model {
+
     private static LinkedList<ComplexNumber> stack;
+    private static final int twelveValues = 12;
 
     /**
      * Costructor
@@ -25,7 +25,7 @@ public class Model {
     public Model() {
         stack = new LinkedList();
     }
- 
+
     /**
      * @return the reference of the private attribute "stack"
      */
@@ -35,6 +35,7 @@ public class Model {
 
     /**
      * set the private attribute "stack"
+     *
      * @param stack
      */
     public void setStack(LinkedList<ComplexNumber> stack) {
@@ -43,14 +44,16 @@ public class Model {
 
     /**
      * add a ComplexNumber on the Stack's top
+     *
      * @param a
      */
     public static void insertComplexNumber(ComplexNumber a) {
         stack.addFirst(a);
     }
- 
-    /** "Drop"
-     * removes the Complex Number from the Stack's top
+
+    /**
+     * "Drop" removes the Complex Number from the Stack's top
+     *
      * @throws ProjectException.stackIsEmptyException if stack is empty
      */
     public static void removeFirstComplexNumber() throws stackIsEmptyException {
@@ -73,8 +76,8 @@ public class Model {
 
     /**
      * removes all Complex Numbers from the Stack
-     * @throws stackIsEmptyException 
-     * da testare
+     *
+     * @throws stackIsEmptyException da testare
      */
     public static void clearModel() throws stackIsEmptyException {
         if (stack.isEmpty()) {
@@ -82,19 +85,19 @@ public class Model {
         }
         stack.clear();
     }
-     
+
     /**
      * "dup" that pushes a copy of the Stack's top element on the stack;
-     * @throws stackIsEmptyException
-     * da testare
+     *
+     * @throws stackIsEmptyException da testare
      */
     public static void duplicateFirst() throws stackIsEmptyException {
         if (stack.isEmpty()) {
             throw new stackIsEmptyException("Stack is empty: can't duplicate any complex number");
         }
-       stack.addFirst(stack.getFirst());
-    }    
-    
+        stack.addFirst(stack.getFirst());
+    }
+
     /**
      * @return the number of elements of the model's stack
      */
@@ -113,40 +116,58 @@ public class Model {
         });
         return ret.toString();
     }
-    
-   /**
+
+    public String lastTwelveElements() {
+        StringBuilder ret = new StringBuilder();
+        int i = 0;
+        for(ComplexNumber num : Model.stack){
+            if(i < Model.twelveValues){
+                ret.append(num).append("\n");
+            }
+            i++;
+        }
+        return ret.toString();
+    }
+
+    /**
      * "swap" that " that exchanges the last two elements on the stack;
+     *
      * @throws UnderTwoElementsException
-     */ 
-    public static void swap() throws UnderTwoElementsException,stackIsEmptyException{
-        if(stack.size()<2)
+     */
+    public static void swap() throws UnderTwoElementsException, stackIsEmptyException {
+        if (stack.size() < 2) {
             throw new UnderTwoElementsException();
-        if(stack.isEmpty()){
+        }
+        if (stack.isEmpty()) {
             throw new stackIsEmptyException();
         }
         ComplexNumber element1 = stack.removeFirst();
         ComplexNumber element2 = stack.removeFirst();
-        
+
         insertComplexNumber(element1);
         insertComplexNumber(element2);
-    } 
-    
+    }
+
     /**
-     * "over" that pushes a copy of the second last element on the stack;
+     * "swap" that " that exchanges the last two elements on the stack;
+     *
      * @throws UnderTwoElementsException
      */
-    
-   public static void over()throws UnderTwoElementsException, stackIsEmptyException{ 
-       if (stack.isEmpty()) {
+    public static void over() throws UnderTwoElementsException, stackIsEmptyException {
+        if (stack.isEmpty()) {
             throw new stackIsEmptyException();
         }
-       
-        if(stack.size()<2) 
-            throw new UnderTwoElementsException(); 
-        ComplexNumber element = stack.removeFirst(); 
-         ComplexNumber element2 = stack.getFirst(); 
-         insertComplexNumber(element);
-        insertComplexNumber(element2); 
+        if (stack.size() < 2) {
+            throw new UnderTwoElementsException();
+        }
+        ComplexNumber element = stack.removeFirst();
+        ComplexNumber element2 = stack.getFirst();
+        insertComplexNumber(element);
+        insertComplexNumber(element2);
+    }
+ 
+    public static int getTwelveValues() {
+        return twelveValues;
+    }
     
-}
 }
