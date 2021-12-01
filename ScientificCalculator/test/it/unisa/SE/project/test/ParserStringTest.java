@@ -17,7 +17,6 @@ import org.junit.*;
  */
 public class ParserStringTest {
 
-    private final String operation = "__OPERATION__";
     private final String complex_number = "__COMPLEX__NUMBER__";
     private final String single_number = "__SINGLENUMBER__";
     private final String invalid_insert = "__INVALID__";
@@ -59,60 +58,6 @@ public class ParserStringTest {
         result = parser.clearString(text);
         assertEquals(expResult, result);
     }
-
-    /**
-     * Test of checkOperation method
-     */
-    @Test
-    public void testCheckOperation() {
-        System.out.println("checkOperation");
-        String text = "addition";
-        String expResult = operation;
-        String result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "substraction";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "multiplication";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "division";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "square root";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "invert sign";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "+";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "-";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "*";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = ":";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "+-";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "sqrt";
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-        text = "hello word";
-        result = parser.checkOperation(text);
-        expResult = continue_checking;
-        assertEquals(expResult, result);
-        text = "\nsqrt";
-        expResult = operation;
-        result = parser.checkOperation(text);
-        assertEquals(expResult, result);
-    }
-
     /**
      * Test of checkPossiblePartReal method.
      */
@@ -250,10 +195,6 @@ public class ParserStringTest {
         assertEquals(expResult, result);
         text = "+4j";
         expResult = single_number;
-        result = parser.parserString(text);
-        assertEquals(expResult, result);
-        text = "addition";
-        expResult = operation;
         result = parser.parserString(text);
         assertEquals(expResult, result);
     }
