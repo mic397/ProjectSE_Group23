@@ -26,12 +26,12 @@ public class GUI extends javax.swing.JFrame {
      */
     public GUI() {
         initComponents();
-        this.jTextArea1.setEditable(false);
+        this.textArea.setEditable(false);
         model = new Model();
         calculator = Calculator.getCalculator();
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +42,7 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
         inputField = new javax.swing.JTextField();
         insertButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -55,18 +55,18 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        textArea.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTextArea1AncestorAdded(evt);
+                textAreaAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane1.setViewportView(jTextArea1);
+        jScrollPane1.setViewportView(textArea);
 
         inputField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +129,6 @@ public class GUI extends javax.swing.JFrame {
         });
 
         over.setText("over");
-        over.setActionCommand("over");
         over.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 joverActionPerformed(evt);
@@ -163,8 +162,7 @@ public class GUI extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(swap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(over, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -225,70 +223,47 @@ public class GUI extends javax.swing.JFrame {
 
     private void printOnTextArea() {
         inputField.setText(""); //clean the inputTextField
-        int value = 0;
-        String str = "";
-        if (Model.size() <= maxValues) {
-           jTextArea1.setText(model.toString());  
-        }
+        textArea.setText(model.lastTwelveElements());
     }
- 
 
-    private void jTextArea1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextArea1AncestorAdded
+
+    private void textAreaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_textAreaAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextArea1AncestorAdded
+    }//GEN-LAST:event_textAreaAncestorAdded
 
     private void sumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumActionPerformed
-        String mess = "There aren't two elements to sum them!";
-        ComplexNumber res;
         try {
-            res = this.calculator.sum();
-        } catch (stackIsEmptyException ex) {
+            this.calculator.sum();
+        } catch (stackIsEmptyException | UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        } catch (UnderTwoElementsException ex) {
-            JOptionPane.showMessageDialog(rootPane, mess);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_sumActionPerformed
 
     private void subActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subActionPerformed
-        ComplexNumber res;
-        String mess = "There aren't two elements to sub them!";
         try {
-            res = this.calculator.sub();
-        } catch (stackIsEmptyException ex) {
+            this.calculator.sub();
+        } catch (stackIsEmptyException | UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        } catch (UnderTwoElementsException ex) {
-            JOptionPane.showMessageDialog(rootPane, mess);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_subActionPerformed
 
     private void mulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulActionPerformed
-        ComplexNumber res;
-        String mess = "There aren't two elements to mul them!";
         try {
-            res = this.calculator.mul();
-        } catch (stackIsEmptyException ex) {
+            this.calculator.mul();
+        } catch (stackIsEmptyException | UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        } catch (UnderTwoElementsException ex) {
-            JOptionPane.showMessageDialog(rootPane, mess);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_mulActionPerformed
 
     private void divActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divActionPerformed
-        ComplexNumber res;
-        String mess = "There aren't two elements to divide them!";
-        String messDivToZero = "Division not defined";
         try {
-            res = this.calculator.div();
-        } catch (stackIsEmptyException ex) {
+            this.calculator.div();
+        } catch (stackIsEmptyException | UnderTwoElementsException | ArithmeticException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        } catch (UnderTwoElementsException ex) {
-            JOptionPane.showMessageDialog(rootPane, mess);
-        } catch (ArithmeticException ex) {
-            JOptionPane.showMessageDialog(rootPane, messDivToZero);
-        }
+        } 
         this.printOnTextArea();
     }//GEN-LAST:event_divActionPerformed
 
@@ -298,42 +273,43 @@ public class GUI extends javax.swing.JFrame {
         } catch (stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
-        this.jTextArea1.setText("");
+        this.textArea.setText("");
     }//GEN-LAST:event_ClearActionPerformed
 
     private void swapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapActionPerformed
-        String message="There aren't two elements in the stack";
-        
+        String message = "There aren't two elements in the stack";
         try {
             Model.swap();
         } catch (UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, message);
-        }catch(stackIsEmptyException ex1){
+        } catch (stackIsEmptyException ex1) {
             JOptionPane.showMessageDialog(rootPane, ex1.getMessage());
         }
         this.printOnTextArea();
     }//GEN-LAST:event_swapActionPerformed
-/**
-     * This method is called when the user insert a number in the text field and press the "enter" key inside the inputtField
-     * This is the same of the click on the insert button 
-     * @param evt 
+    /**
+     * This method is called when the user insert a number in the text field and
+     * press the "enter" key inside the inputtField This is the same of the
+     * click on the insert button
+     *
+     * @param evt
      */
     private void inputFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputFieldKeyPressed
-     
-         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
-            insertButton.doClick(); 
-         }
+
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            insertButton.doClick();
+        }
     }//GEN-LAST:event_inputFieldKeyPressed
 
     private void joverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joverActionPerformed
-     
+
         String mess = "There aren't two elemento for pushes a copy of the second last element on the stack!";
-      
+
         try {
-           Model.over();
-        }catch (UnderTwoElementsException ex) {
+            Model.over();
+        } catch (UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, mess);
-        } catch(stackIsEmptyException ex1){
+        } catch (stackIsEmptyException ex1) {
             JOptionPane.showMessageDialog(rootPane, ex1.getMessage());
         }
         this.printOnTextArea();
@@ -383,8 +359,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton over;
     private javax.swing.JButton swap;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 }
