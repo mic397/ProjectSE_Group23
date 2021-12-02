@@ -139,6 +139,22 @@ public class Calculator {
     }
     
     /**
+     * @return the sqare root of element on the top of the stack
+     * @throws stackIsEmptyException
+     * @throws ArgumentNotDefinedException
+     * @return ComplexNumber
+     */
+    public ComplexNumber sqrt () throws ArgumentNotDefinedException, stackIsEmptyException {
+        ComplexNumber res;
+        ComplexNumber number = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+
+        res = ComplexOperations.sqrt(number);
+        Model.insertComplexNumber(res);
+        return res;
+    }
+    
+    /**
      * This method takes the top element from the stack and saves it into the variable "x"
      * @throws stackIsEmptyException
      * @param variables
@@ -151,4 +167,37 @@ public class Calculator {
                  var.setVariableValue(variables, number);
             }
         }
+     
+     /** 
+     * This method pushes the value of the variable "x" onto the stack 
+     * @param variables 
+     *  
+     */ 
+     public void saveIntoStack(char variables) { 
+        
+           ComplexNumber number = var.getVariableValue(variables); 
+           
+            Model.insertComplexNumber(number); 
+   
+        } 
+     
+     /** 
+     * This method takes the top element from the stack and adds it to the value of the variable "x" 
+     * @param variables 
+     * @throws stackIsEmptyException 
+     */ 
+     public void addToVariable(char variables) throws stackIsEmptyException{ 
+         
+           ComplexNumber number1 = var.getVariableValue(variables); 
+                
+                if (Model.size() == 0) { 
+                throw new stackIsEmptyException(); 
+                }else{ 
+                 ComplexNumber number2  = Model.getFirstComplexNumber();    
+                 Model.removeFirstComplexNumber();  
+                 var.setVariableValue(variables,ComplexOperations.sum(number1, number2)); 
+                 
+                    
+                } 
+            }
 }
