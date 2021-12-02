@@ -15,6 +15,7 @@ public class Calculator {
     private Model model;
     private static Calculator instance = null;
     private final ParserString parser = new ParserString();
+    private final Variables var;
 
     public static Calculator getCalculator() {
         if (instance == null) {
@@ -33,6 +34,7 @@ public class Calculator {
 
     private Calculator() {
         model = new Model();
+        var = new Variables();
     }
 
     /**
@@ -135,4 +137,18 @@ public class Calculator {
         Model.insertComplexNumber(res);
         return res;
     }
+    
+    /**
+     * This method takes the top element from the stack and saves it into the variable "x"
+     * @throws stackIsEmptyException
+     * @param variables
+     */
+     public void saveIntoVariable(char variables) throws stackIsEmptyException{
+            ComplexNumber number = Model.getFirstComplexNumber();
+            if (number == null) {
+                throw new stackIsEmptyException();
+            } else {
+                 var.setVariableValue(variables, number);
+            }
+        }
 }
