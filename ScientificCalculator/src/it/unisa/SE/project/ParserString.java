@@ -40,27 +40,6 @@ public class ParserString {
     }
 
     /**
-     * The method recognizes if there is an operation in the string between:
-     * "addiction", "substraction", "multiplication", "division", "square root",
-     * "invert sign"
-     *
-     * @param text la stringa da dover controllare
-     * @return IL metodo torna la costante operation se i confronti con almeno
-     * una stringa citata prima ha successo, invalid_operation altrimenti.
-     */
-    /*public String checkOperation(String text) {
-        text = text.replaceAll("\\n", "");
-        if (text.equals("+") || text.equals("-") || text.equals("*") || text.equals(":") || text.equals("+-") || text.equals("sqrt")) {
-            return operation;
-        }
-        String possible_operation = text.toLowerCase();
-        if (possible_operation.equals("addition") || possible_operation.equals("substraction") || possible_operation.equals("multiplication") || possible_operation.equals("division") || possible_operation.equals("square root") || possible_operation.equals("invert sign")) {
-            return operation;
-        }
-        return continue_checking;
-    }*/
-
-    /**
      * The method checks whether the input string is a real number.
      *
      * @author emanu
