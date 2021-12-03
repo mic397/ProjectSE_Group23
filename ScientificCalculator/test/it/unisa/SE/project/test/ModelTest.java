@@ -170,6 +170,7 @@ public class ModelTest {
     
     /**
      * Verify that "swap" operation exchanges the last two elements on the stack
+     * @throws ProjectException.stackIsEmptyException
      * @throws UnderTwoElementsException,stackIsEmptyException
      */
     @Test
@@ -181,6 +182,7 @@ public class ModelTest {
 
     /**
      * @throws ProjectException.UnderTwoElementsException
+     * @throws ProjectException.stackIsEmptyException
      */
     
     @Test(expected = UnderTwoElementsException.class)
@@ -190,6 +192,7 @@ public class ModelTest {
        
     /**
      * Verify that "over" that pushes a copy of the second last element on the stack
+     * @throws ProjectException.stackIsEmptyException
      * @throws UnderTwoElementsException,stackIsEmptyException
      */
     @Test
@@ -201,6 +204,7 @@ public class ModelTest {
 
     /**
      * @throws ProjectException.UnderTwoElementsException
+     * @throws ProjectException.stackIsEmptyException
      */
     
     @Test(expected = stackIsEmptyException.class)
