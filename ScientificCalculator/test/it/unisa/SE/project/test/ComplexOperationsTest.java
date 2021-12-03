@@ -8,23 +8,19 @@ import ProjectException.ArgumentNotDefinedException;
 import ProjectException.notAcceptableValueException;
 import it.unisa.SE.project.ComplexNumber;
 import it.unisa.SE.project.ComplexOperations;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
- 
 
 /**
  *
  * @author Michela
  */
 public class ComplexOperationsTest {
-    
+
     public ComplexOperationsTest() {
     }
-    
+
     private ComplexNumber number1;
     private ComplexNumber number2;
     private ComplexNumber number3;
@@ -81,7 +77,7 @@ public class ComplexOperationsTest {
         assertEquals(expected16, ComplexOperations.sub(number5, number6));
     }
 
-@Test
+    @Test
     public void testArg() throws ArgumentNotDefinedException {
         double arg1 = ComplexOperations.arg(number1);
         double arg2 = ComplexOperations.arg(number2);
@@ -99,11 +95,11 @@ public class ComplexOperationsTest {
 
         double delta = 0.3;
 
-        assertEquals(expected1,arg1,delta);
+        assertEquals(expected1, arg1, delta);
         assertEquals(expected2, arg2, delta);
         assertEquals(expected3, arg3, delta);
         assertEquals(expected4, arg4, delta);
-        assertEquals(expected5, arg5 , delta);
+        assertEquals(expected5, arg5, delta);
         assertEquals(expected6, arg6, delta);
 
         assertTrue(arg1 <= Math.PI);
@@ -141,11 +137,11 @@ public class ComplexOperationsTest {
         double delta = 0.3;
 
         assertEquals(expected1, mod1, delta);
-        assertEquals(expected2, mod2 , delta);
+        assertEquals(expected2, mod2, delta);
         assertEquals(expected3, mod3, delta);
         assertEquals(expected4, mod4, delta);
         assertEquals(expected5, mod5, delta);
-        assertEquals(expected6, mod6 , delta);
+        assertEquals(expected6, mod6, delta);
         assertEquals(expected7, mod7, delta);
     }
 
@@ -239,19 +235,18 @@ public class ComplexOperationsTest {
      * imaginary parts not equal to zero and a real number equal to 1, is equal
      * to originary complex number
      */
-    /*
     @Test
     public void testScale() {
         double val = 0;
-        assertEquals(new ComplexNumber(0, 0), number1.scale(val));
+        assertEquals(new ComplexNumber(0, 0), ComplexOperations.scale(number1, val));
         val = 1;
-        assertEquals(number1, number1.scale(val));
+        assertEquals(number1, ComplexOperations.scale(number1, val));
         val = 2;
         number2.setReal(number1.getReal() * val);
         number2.setImaginary(number1.getImaginary() * val);
-        assertEquals(number2, number1.scale(val));
+        assertEquals(number2, ComplexOperations.scale(number1, val));
     }
-*/
+
     /**
      * Verify the corretness to calculate a complex number's conjugate
      */
@@ -274,15 +269,24 @@ public class ComplexOperationsTest {
     /**
      * Verify that multplying by -1, it returns the original number
      */
-    /*
     @Test
     public void testInvertSign() {
         number1.setReal(1.0);
         number1.setImaginary(2.0);
-        assertEquals(number1.scale(-1), number1.invertSign());
-        assertEquals(number1, number1.invertSign().invertSign());
+        assertEquals(ComplexOperations.scale(number1, -1), ComplexOperations.invertSign(number1));
+        ComplexNumber res = ComplexOperations.invertSign(number1);
+        assertEquals(number1, ComplexOperations.invertSign(res));
+        number2.setReal(0.0);
+        number2.setImaginary(2.0);
+        res = ComplexOperations.invertSign(number2);
+        assertEquals(new ComplexNumber(0,number2.getImaginary()*(-1)), res);
+        number2.setReal(2.0);
+        number2.setImaginary(0.0);
+        res = ComplexOperations.invertSign(number2);
+        assertEquals(new ComplexNumber(number2.getReal()*(-1),0), res);
+        assertEquals(ComplexOperations.scale(number2, -1), res);
     }
-*/
+
     /**
      * Verify the corretness to calculate a complex number's reciprocal
      *
@@ -317,7 +321,7 @@ public class ComplexOperationsTest {
         ComplexNumber res = ComplexOperations.div(number2, number1);
         assertEquals(res, ComplexOperations.reciprocal(number1));
     }
-
-   
+    
+    
     
 }
