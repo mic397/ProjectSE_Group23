@@ -63,6 +63,33 @@ public class Calculator {
     }
 
     /**
+     * this method controls that the binary operations are feasible
+     *
+     * @throws ProjectException.UnderOneElementException
+     */
+    public void checkOneOperation() throws UnderOneElementException {
+        if (Model.size() < 1) {
+            throw new UnderOneElementException("There isn't one element to calculate it!");
+        }
+    }
+    
+    
+    /**
+     * @return the sum of elements inserted by user
+     * @throws UnderOneElementException
+     * @throws ProjectException.stackIsEmptyException
+     */
+    public ComplexNumber invertSign() throws UnderOneElementException, stackIsEmptyException {
+        checkOneOperation();
+        ComplexNumber res;
+        ComplexNumber number = Model.getFirstComplexNumber();
+        Model.removeFirstComplexNumber();
+        res = ComplexOperations.invertSign(number);
+        Model.insertComplexNumber(res);
+        return res;
+    }
+    
+    /**
      * @return the sum of elements inserted by user
      * @throws stackIsEmptyException
      * @throws UnderTwoElementsException
@@ -137,14 +164,14 @@ public class Calculator {
         Model.insertComplexNumber(res);
         return res;
     }
-    
+
     /**
      * @return the sqare root of element on the top of the stack
      * @throws stackIsEmptyException
      * @throws ArgumentNotDefinedException
      * @return ComplexNumber
      */
-    public ComplexNumber sqrt () throws ArgumentNotDefinedException, stackIsEmptyException {
+    public ComplexNumber sqrt() throws ArgumentNotDefinedException, stackIsEmptyException {
         ComplexNumber res;
         ComplexNumber number = Model.getFirstComplexNumber();
         Model.removeFirstComplexNumber();
@@ -153,51 +180,54 @@ public class Calculator {
         Model.insertComplexNumber(res);
         return res;
     }
-    
+
     /**
-     * This method takes the top element from the stack and saves it into the variable "x"
+     * This method takes the top element from the stack and saves it into the
+     * variable "x"
+     *
      * @throws stackIsEmptyException
      * @param variables
      */
-     public void saveIntoVariable(char variables) throws stackIsEmptyException{
-            ComplexNumber number = Model.getFirstComplexNumber();
-            if (number == null) {
-                throw new stackIsEmptyException();
-            } else {
-                 var.setVariableValue(variables, number);
-            }
+    public void saveIntoVariable(char variables) throws stackIsEmptyException {
+        ComplexNumber number = Model.getFirstComplexNumber();
+        if (number == null) {
+            throw new stackIsEmptyException();
+        } else {
+            var.setVariableValue(variables, number);
         }
-     
-     /** 
-     * This method pushes the value of the variable "x" onto the stack 
-     * @param variables 
-     *  
-     */ 
-     public void saveIntoStack(char variables) { 
-        
-           ComplexNumber number = var.getVariableValue(variables); 
-           
-            Model.insertComplexNumber(number); 
-   
-        } 
-     
-     /** 
-     * This method takes the top element from the stack and adds it to the value of the variable "x" 
-     * @param variables 
-     * @throws stackIsEmptyException 
-     */ 
-     public void addToVariable(char variables) throws stackIsEmptyException{ 
-         
-           ComplexNumber number1 = var.getVariableValue(variables); 
-                
-                if (Model.size() == 0) { 
-                throw new stackIsEmptyException(); 
-                }else{ 
-                 ComplexNumber number2  = Model.getFirstComplexNumber();    
-                 Model.removeFirstComplexNumber();  
-                 var.setVariableValue(variables,ComplexOperations.sum(number1, number2)); 
-                 
-                    
-                } 
-            }
+    }
+
+    /**
+     * This method pushes the value of the variable "x" onto the stack
+     *
+     * @param variables
+     *
+     */
+    public void saveIntoStack(char variables) {
+
+        ComplexNumber number = var.getVariableValue(variables);
+
+        Model.insertComplexNumber(number);
+
+    }
+
+    /**
+     * This method takes the top element from the stack and adds it to the value
+     * of the variable "x"
+     *
+     * @param variables
+     * @throws stackIsEmptyException
+     */
+    public void addToVariable(char variables) throws stackIsEmptyException {
+
+        ComplexNumber number1 = var.getVariableValue(variables);
+
+        if (Model.size() == 0) {
+            throw new stackIsEmptyException();
+        } else {
+            ComplexNumber number2 = Model.getFirstComplexNumber();
+            Model.removeFirstComplexNumber();
+            var.setVariableValue(variables, ComplexOperations.sum(number1, number2));
+        }
+    }
 }
