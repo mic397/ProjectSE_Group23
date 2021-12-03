@@ -14,16 +14,21 @@ import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.Calculator;
 import it.unisa.SE.project.ComplexNumber;
 import it.unisa.SE.project.ComplexOperations;
+import it.unisa.SE.project.Variables;
+import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+
 /**
  *
  * @author aniel
  */
-public class CalculatorTest{
+public class CalculatorTest {
 
     private Calculator calculator;
+    private Variables var;
+    private ArrayList<Character> letters;
     private ComplexNumber number1 = new ComplexNumber(7.0, 15.0);
     private ComplexNumber number2 = new ComplexNumber(-3.0, 9.0);
 
@@ -33,7 +38,13 @@ public class CalculatorTest{
     @Before
     public void setUp() {
         calculator = Calculator.getCalculator();
+        var = new Variables();
+        letters = new ArrayList<>();
+        letters.add('a');
+        letters.add('b');
+        letters.add('c');
     }
+
     /**
      *
      * @throws ProjectException.ArgumentNotDefinedException
@@ -42,7 +53,7 @@ public class CalculatorTest{
      */
     @Test
     public void testProcessInput() throws ArgumentNotDefinedException, NumberFormatException, ArithmeticException, UnderTwoElementsException, stackIsEmptyException, notAcceptableValueException {
-        String num = "1+3j"; 
+        String num = "1+3j";
         calculator.processInput(num);
         ComplexNumber res = calculator.getModel().getStack().pop();
         assertEquals(res, new ComplexNumber(1, 3));
@@ -50,7 +61,7 @@ public class CalculatorTest{
         calculator.processInput(real);
         res = calculator.getModel().getStack().pop();
         assertEquals(res, new ComplexNumber(0, 0));
-        String imaginary = "j"; 
+        String imaginary = "j";
         calculator.processInput(imaginary);
         res = calculator.getModel().getStack().pop();
         assertEquals(res, new ComplexNumber(0, 1));
@@ -154,70 +165,77 @@ public class CalculatorTest{
         ComplexNumber num = calculator.div();
         assertEquals(num, ComplexOperations.div(number1, number2));
     }
-    
+
     /**
-     * 
+     *
      */
     @Test(expected = UnderTwoElementsException.class)
-    public void testCheckDoubleOperationsNull(){
+    public void testCheckDoubleOperationsNull() {
         calculator.getModel().getStack().clear();
         calculator.checkDoubleOperations();
     }
-    
+
     /**
-     * 
+     *
      */
     @Test(expected = UnderTwoElementsException.class)
-    public void testCheckDoubleOperationsOneElement(){
+    public void testCheckDoubleOperationsOneElement() {
         calculator.getModel().getStack().push(number1);
         calculator.checkDoubleOperations();
     }
-    
+
     /**
      * @throws ProjectException.UnderOneElementException
      */
     @Test(expected = UnderOneElementException.class)
-    public void testCheckOneOperation() throws UnderOneElementException{
+    public void testCheckOneOperation() throws UnderOneElementException {
         calculator.getModel().getStack().clear();
         calculator.checkOneOperation();
     }
-    
+
     /**
-     * 
+     *
      * @throws ProjectException.UnderOneElementException
      * @throws ProjectException.stackIsEmptyException
      */
     @Test
-    public void testInvertSign() throws UnderOneElementException, stackIsEmptyException{
+    public void testInvertSign() throws UnderOneElementException, stackIsEmptyException {
         number1.setImaginary(1.2);
         number1.setReal(1.1);
         calculator.getModel().getStack().push(number1);
         ComplexNumber res = calculator.invertSign();
         assertEquals(ComplexOperations.invertSign(number1), res);
     }
-    
+
     /**
-     * 
+     *
      * @throws stackIsEmptyException
-     * @throws VariableValueException 
+     * @throws VariableValueException
      */
     @Test(expected = VariableValueException.class)
-    public void testMinToVariableNull() throws stackIsEmptyException, VariableValueException{
-      calculator.getModel().getStack().clear();
-      char letter = 'a';
-      calculator.minToVariable(letter);
+    public void testMinToVariableNull() throws stackIsEmptyException, VariableValueException {
+        calculator.getModel().getStack().clear();
+        char letter = 'a';
+        calculator.minToVariable(letter);
     }
-    
+
     /**
-     * 
+     *
      * @throws stackIsEmptyException
-     * @throws VariableValueException 
+     * @throws VariableValueException
      */
     @Test(expected = VariableValueException.class)
-    public void testMinToVariable() throws stackIsEmptyException, VariableValueException{
-      calculator.getModel().getStack().push(number1);
-      char letter = 'a';
-      calculator.addToVariable(letter);
-      calculator.minToVariable(letter);
+    public void testMinToVariable() throws stackIsEmptyException, VariableValueException {
+        calculator.getModel().getStack().push(number1);
+        var.setVariableValue(letters.get(0), number1);
+        calculator.minToVariable(letters.get(0));
+        ComplexNumber num = calculator.getModel().getStack().getFirst();
+        assertEquals(num, var.getVariableValue(letters.get(0)));
+        var.setVariableValue(letters.get(1), number2);
+        calculator.minToVariable(letters.get(1));
+        num = calculator.getModel().getStack().getFirst();
+        assertEquals(num, var.getVariableValue(letters.get(1)));
+        var.setVariableValue(letters.get(2), new ComplexNumber(0,0));
+        assertEquals(var.getVariableValue(letters.get(0)),var.getVariableValue(letters.get(2)));
     }
 }
