@@ -57,7 +57,7 @@ public class Model {
      * @throws ProjectException.stackIsEmptyException if stack is empty
      */
     public static void removeFirstComplexNumber() throws stackIsEmptyException {
-        if (stack.isEmpty()) {
+        if (stack.isEmpty()){
             throw new stackIsEmptyException("Stack is empty: can't remove any complex number");
         }
         stack.removeFirst();
@@ -76,7 +76,6 @@ public class Model {
 
     /**
      * removes all Complex Numbers from the Stack
-     *
      * @throws stackIsEmptyException da testare
      */
     public static void clearModel() throws stackIsEmptyException {
@@ -133,6 +132,7 @@ public class Model {
      * "swap" that " that exchanges the last two elements on the stack;
      *
      * @throws UnderTwoElementsException
+     * @throws ProjectException.stackIsEmptyException
      */
     public static void swap() throws UnderTwoElementsException, stackIsEmptyException {
         if (stack.size() < 2) {
@@ -152,6 +152,7 @@ public class Model {
      * "swap" that " that exchanges the last two elements on the stack;
      *
      * @throws UnderTwoElementsException
+     * @throws ProjectException.stackIsEmptyException
      */
     public static void over() throws UnderTwoElementsException, stackIsEmptyException {
         if (stack.isEmpty()) {
@@ -169,5 +170,4 @@ public class Model {
     public static int getTwelveValues() {
         return twelveValues;
     }
-    
-}
+} 
