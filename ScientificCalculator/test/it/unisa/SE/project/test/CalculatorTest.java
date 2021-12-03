@@ -43,6 +43,8 @@ public class CalculatorTest {
         letters.add('a');
         letters.add('b');
         letters.add('c');
+        letters.add('d');
+        letters.add('f');
     }
 
     /**
@@ -207,6 +209,7 @@ public class CalculatorTest {
         assertEquals(ComplexOperations.invertSign(number1), res);
     }
 
+        
     /**
      *
      * @throws stackIsEmptyException
@@ -219,6 +222,8 @@ public class CalculatorTest {
         calculator.minToVariable(letter);
     }
 
+    
+    
     /**
      *
      * @throws stackIsEmptyException

@@ -9,7 +9,10 @@ import java.util.HashMap;
 import ProjectException.NotVariableKeyException;
 import ProjectException.VariableValueException;
 
-
+/**
+ *
+ * @author Michela
+ */
 
 public class Variables{
     private HashMap<Character, ComplexNumber> map;
@@ -25,6 +28,7 @@ public class Variables{
      * This method checks that the variable is between the letters  [a,z] of English alphabet
      *
      * @param var 
+     * @throws NotVariableKeyException
      */
     
      private void verifyVariable(char var) throws NotVariableKeyException {
@@ -34,13 +38,13 @@ public class Variables{
     }
     
     /**
-     * This method save a ComplexNumbers in a variable
+     * This method save a ComplexNumbers in a variable which is the key
      *
      * @param key 
      * @param number 
-     * 
+     * @throws NotVariableKeyException
      */
-    public void setVariableValue(char key, ComplexNumber number) throws NotVariableKeyException{
+     public void setVariableValue(char key, ComplexNumber number) throws NotVariableKeyException{
         verifyVariable(key);
         if(!Character.isAlphabetic(key)){
            throw new NotVariableKeyException() ;
@@ -52,7 +56,7 @@ public class Variables{
     }
     
     /**
-     * This method the ComplexNumbers contained in the key
+     * This method return the ComplexNumbers associated to the key
      * @param key
      * @return ComplexNumber
      * @throws ProjectException.VariableValueException
@@ -63,6 +67,8 @@ public class Variables{
             throw new VariableValueException("Variable has no associated value");
         return map.get(key);
     }
+    
+    
 
     @Override
     public int hashCode() {

@@ -472,7 +472,7 @@ public class GUI extends javax.swing.JFrame {
             char va1 = var.charAt(0);
             calculator.saveIntoVariable(va1);
         } catch (stackIsEmptyException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error: There aren't elements in the stack", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_saveIntoVariableActionPerformed
 
