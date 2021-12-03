@@ -8,6 +8,7 @@ package it.unisa.SE.project.test;
 import ProjectException.ArgumentNotDefinedException;
 import ProjectException.UnderOneElementException;
 import ProjectException.UnderTwoElementsException;
+import ProjectException.VariableValueException;
 import ProjectException.notAcceptableValueException;
 import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.Calculator;
@@ -193,5 +194,30 @@ public class CalculatorTest{
         calculator.getModel().getStack().push(number1);
         ComplexNumber res = calculator.invertSign();
         assertEquals(ComplexOperations.invertSign(number1), res);
+    }
+    
+    /**
+     * 
+     * @throws stackIsEmptyException
+     * @throws VariableValueException 
+     */
+    @Test(expected = VariableValueException.class)
+    public void testMinToVariableNull() throws stackIsEmptyException, VariableValueException{
+      calculator.getModel().getStack().clear();
+      char letter = 'a';
+      calculator.minToVariable(letter);
+    }
+    
+    /**
+     * 
+     * @throws stackIsEmptyException
+     * @throws VariableValueException 
+     */
+    @Test(expected = VariableValueException.class)
+    public void testMinToVariable() throws stackIsEmptyException, VariableValueException{
+      calculator.getModel().getStack().push(number1);
+      char letter = 'a';
+      calculator.addToVariable(letter);
+      calculator.minToVariable(letter);
     }
 }
