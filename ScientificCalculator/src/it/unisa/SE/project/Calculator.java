@@ -201,12 +201,13 @@ public class Calculator {
      * This method pushes the value of the variable "x" onto the stack
      *
      * @param variables
+     * @throws ProjectException.VariableValueException
      *
      */
-    public void saveIntoStack(char variables) {
+    public void saveIntoStack(char variables) throws VariableValueException {
 
         ComplexNumber number = var.getVariableValue(variables);
-
+        
         Model.insertComplexNumber(number);
 
     }
@@ -217,9 +218,9 @@ public class Calculator {
      *
      * @param variables
      * @throws stackIsEmptyException
+     * @throws ProjectException.VariableValueException
      */
-    public void addToVariable(char variables) throws stackIsEmptyException {
-
+    public void addToVariable(char variables) throws stackIsEmptyException, VariableValueException {
         ComplexNumber number1 = var.getVariableValue(variables);
 
         if (Model.size() == 0) {
@@ -230,4 +231,11 @@ public class Calculator {
             var.setVariableValue(variables, ComplexOperations.sum(number1, number2));
         }
     }
+    
+    public void minToVariable(char variable) throws stackIsEmptyException, VariableValueException {
+            ComplexNumber number1 = this.var.getVariableValue(variable);
+            ComplexNumber number2 = Model.getFirstComplexNumber();
+            Model.removeFirstComplexNumber();
+            var.setVariableValue(variable, ComplexOperations.sub(number1, number2));
+    } 
 }
