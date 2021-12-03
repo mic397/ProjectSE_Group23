@@ -551,8 +551,14 @@ public class GUI extends javax.swing.JFrame {
     private void minVarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minVarButtonActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
         try {
+            String messageSuccess = "The value of variable " + var + " is modified: "
+                    + var + " = " + var + " - " + "(" + Model.getFirstComplexNumber() + ")";
             char va1 = var.charAt(0);
             calculator.minToVariable(va1);
+            JOptionPane.showMessageDialog(this, messageSuccess,
+                    "Success Operation: ",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         } catch (stackIsEmptyException | VariableValueException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(),
                     "Error",
