@@ -6,6 +6,7 @@
 package it.unisa.SE.project.test;
 
 import ProjectException.ArgumentNotDefinedException;
+import ProjectException.UnderOneElementException;
 import ProjectException.UnderTwoElementsException;
 import ProjectException.notAcceptableValueException;
 import ProjectException.stackIsEmptyException;
@@ -15,7 +16,6 @@ import it.unisa.SE.project.ComplexOperations;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.*;
 /**
  *
  * @author aniel
@@ -170,5 +170,28 @@ public class CalculatorTest{
     public void testCheckDoubleOperationsOneElement(){
         calculator.getModel().getStack().push(number1);
         calculator.checkDoubleOperations();
+    }
+    
+    /**
+     * @throws ProjectException.UnderOneElementException
+     */
+    @Test(expected = UnderOneElementException.class)
+    public void testCheckOneOperation() throws UnderOneElementException{
+        calculator.getModel().getStack().clear();
+        calculator.checkOneOperation();
+    }
+    
+    /**
+     * 
+     * @throws ProjectException.UnderOneElementException
+     * @throws ProjectException.stackIsEmptyException
+     */
+    @Test
+    public void testInvertSign() throws UnderOneElementException, stackIsEmptyException{
+        number1.setImaginary(1.2);
+        number1.setReal(1.1);
+        calculator.getModel().getStack().push(number1);
+        ComplexNumber res = calculator.invertSign();
+        assertEquals(ComplexOperations.invertSign(number1), res);
     }
 }
