@@ -7,6 +7,7 @@ package it.unisa.SE.project;
 import java.util.Objects;
 import java.util.HashMap;
 import ProjectException.NotVariableKeyException;
+import ProjectException.VariableValueException;
 
 
 
@@ -54,8 +55,12 @@ public class Variables{
      * This method the ComplexNumbers contained in the key
      * @param key
      * @return ComplexNumber
+     * @throws ProjectException.VariableValueException
      */
-    public ComplexNumber getVariableValue(char key){
+    public ComplexNumber getVariableValue(char key) throws VariableValueException{
+        ComplexNumber num = map.get(key);
+        if(num == null)
+            throw new VariableValueException("Variable has no associated value");
         return map.get(key);
     }
 
