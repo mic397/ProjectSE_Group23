@@ -469,10 +469,19 @@ public class GUI extends javax.swing.JFrame {
     private void saveIntoVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoVariableActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
         try {
+            String messageSuccess = "The value of variable " + var + " is: "
+                     + Model.getFirstComplexNumber();
             char va1 = var.charAt(0);
             calculator.saveIntoVariable(va1);
+            JOptionPane.showMessageDialog(this, messageSuccess,
+                    "Success Operation: ",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         } catch (stackIsEmptyException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }//GEN-LAST:event_saveIntoVariableActionPerformed
 
@@ -494,13 +503,21 @@ public class GUI extends javax.swing.JFrame {
 
     private void saveIntoStackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoStackActionPerformed
 
-        String value = (String) jComboBox2.getSelectedItem();
-        char va1 = value.charAt(0);
-
+        String var = (String) jComboBox2.getSelectedItem();
         try {
-            calculator.saveIntoStack(va1);
-        } catch (VariableValueException ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            String messSucc= "The value of variable " + var + " is modified: "
+                    + var + " = " + var + " + " + "(" + Model.getFirstComplexNumber() + ")";
+            char va1 = var.charAt(0);
+            calculator.addToVariable(va1);
+            JOptionPane.showMessageDialog(this, messSucc,
+                    "Success Operation: ",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } catch (stackIsEmptyException | VariableValueException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
         this.printOnTextArea();
     }//GEN-LAST:event_saveIntoStackActionPerformed

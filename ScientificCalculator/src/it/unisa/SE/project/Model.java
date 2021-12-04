@@ -149,7 +149,7 @@ public class Model {
     }
 
     /**
-     * "swap" that " that exchanges the last two elements on the stack;
+     * "over" that  that pushes a copyof the second last element.
      *
      * @throws UnderTwoElementsException
      * @throws ProjectException.stackIsEmptyException

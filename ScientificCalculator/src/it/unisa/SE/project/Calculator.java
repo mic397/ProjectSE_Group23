@@ -15,7 +15,15 @@ public class Calculator {
     private Model model;
     private static Calculator instance = null;
     private final ParserString parser = new ParserString();
-    private final Variables var;
+    private Variables var;
+
+    public void setVar(Variables var) {
+        this.var = var;
+    }
+
+    public Variables getVar() {
+        return var;
+    }
 
     public static Calculator getCalculator() {
         if (instance == null) {
@@ -222,14 +230,10 @@ public class Calculator {
      */
     public void addToVariable(char variables) throws stackIsEmptyException, VariableValueException {
         ComplexNumber number1 = var.getVariableValue(variables);
-
-        if (Model.size() == 0) {
-            throw new stackIsEmptyException();
-        } else {
             ComplexNumber number2 = Model.getFirstComplexNumber();
             Model.removeFirstComplexNumber();
             var.setVariableValue(variables, ComplexOperations.sum(number1, number2));
-        }
+        
     }
     
     public void minToVariable(char variable) throws stackIsEmptyException, VariableValueException {

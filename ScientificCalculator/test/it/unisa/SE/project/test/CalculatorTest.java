@@ -15,6 +15,7 @@ import it.unisa.SE.project.Calculator;
 import it.unisa.SE.project.ComplexNumber;
 import it.unisa.SE.project.ComplexOperations;
 import it.unisa.SE.project.Variables;
+import it.unisa.SE.project.Model;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -31,7 +32,9 @@ public class CalculatorTest {
     private ArrayList<Character> letters;
     private ComplexNumber number1 = new ComplexNumber(7.0, 15.0);
     private ComplexNumber number2 = new ComplexNumber(-3.0, 9.0);
-
+    private ComplexNumber number3 = new ComplexNumber(10, -9.0);
+    private ComplexNumber number4 = new ComplexNumber(0 , 9.0);
+    private ComplexNumber number5 = new ComplexNumber(20.0 , 0);
     public CalculatorTest() {
     }
 
@@ -39,6 +42,7 @@ public class CalculatorTest {
     public void setUp() {
         calculator = Calculator.getCalculator();
         var = new Variables();
+        
         letters = new ArrayList<>();
         letters.add('a');
         letters.add('b');
@@ -209,7 +213,62 @@ public class CalculatorTest {
         assertEquals(ComplexOperations.invertSign(number1), res);
     }
 
+    /**
+     *
+     * @throws ArgumentNotDefinedException
+     * @throws stackIsEmptyException
+     */
+      @Test
+    public void testSqrt() throws stackIsEmptyException, ArgumentNotDefinedException{
+        calculator.getModel().getStack().push(number1);
+        calculator.getModel().getStack().push(number3);
+         ComplexNumber expected1 = new ComplexNumber(3.424,-1.314);
+        assertEquals(expected1, ComplexOperations.sqrt(number3));
         
+        calculator.getModel().getStack().push(number2);
+        calculator.getModel().getStack().push(number4);
+        ComplexNumber expected2 = new ComplexNumber(2.121,2.121);
+        assertEquals(expected2, ComplexOperations.sqrt(number4));
+        
+        calculator.getModel().getStack().push(number3);
+        calculator.getModel().getStack().push(number5);
+        ComplexNumber expected3 = new ComplexNumber(4.472,0);
+        assertEquals(expected3, ComplexOperations.sqrt(number5));
+      
+    }
+    
+    
+    /**
+     * Test of saveIntoVariable
+     * @throws stackIsEmptyException
+     * @throws VariableValueException
+     */
+    @Test
+    public void testSaveIntoVariable() throws stackIsEmptyException,VariableValueException {
+        
+         calculator.getModel().getStack().push(number2);
+         calculator.saveIntoVariable(letters.get(3));
+         ComplexNumber number = calculator.getModel().getFirstComplexNumber();
+         ComplexNumber var1 = calculator.getVar().getVariableValue(letters.get(3));
+         assertEquals(number,var1);
+        
+    }
+    
+    /**
+     *
+     * @throws stackIsEmptyException
+     * 
+     */
+    @Test(expected = stackIsEmptyException.class)
+    public void testSaveIntoVariablestackIsEmpty() throws stackIsEmptyException {
+        calculator.getModel().getStack().clear();
+        char variable = 'f';
+        calculator.saveIntoVariable(variable);
+    
+    }
+    
+    
+    
     /**
      *
      * @throws stackIsEmptyException
@@ -239,8 +298,10 @@ public class CalculatorTest {
         var.setVariableValue(letters.get(1), number2);
         calculator.minToVariable(letters.get(1));
         num = calculator.getModel().getStack().getFirst();
-        assertEquals(num, var.getVariableValue(letters.get(1)));
+        assertEquals(number2, var.getVariableValue(letters.get(1)));
         var.setVariableValue(letters.get(2), new ComplexNumber(0,0));
         assertEquals(var.getVariableValue(letters.get(0)),var.getVariableValue(letters.get(2)));
     }
+    
+   
 }
