@@ -503,6 +503,18 @@ public class GUI extends javax.swing.JFrame {
 
     private void saveIntoStackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoStackActionPerformed
 
+        String value = (String) jComboBox2.getSelectedItem();
+        char va1 = value.charAt(0);
+
+        try {
+            calculator.saveIntoStack(va1);
+        } catch (VariableValueException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.printOnTextArea();
+    }//GEN-LAST:event_saveIntoStackActionPerformed
+
+    private void jButtonAddVarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddVarActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
         try {
             String messSucc= "The value of variable " + var + " is modified: "
@@ -520,22 +532,7 @@ public class GUI extends javax.swing.JFrame {
             );
         }
         this.printOnTextArea();
-    }//GEN-LAST:event_saveIntoStackActionPerformed
-
-    private void jButtonAddVarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddVarActionPerformed
-
-        String var = (String) jComboBox2.getSelectedItem();
-
-        try {
-            char va1 = var.charAt(0);
-            calculator.addToVariable(va1);
-        } catch (stackIsEmptyException | VariableValueException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
-        this.printOnTextArea();
+        
     }//GEN-LAST:event_jButtonAddVarActionPerformed
 
     private void dropButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropButtonActionPerformed
