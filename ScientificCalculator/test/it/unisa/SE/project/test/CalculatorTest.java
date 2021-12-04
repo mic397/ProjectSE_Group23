@@ -49,6 +49,7 @@ public class CalculatorTest {
         letters.add('c');
         letters.add('d');
         letters.add('f');
+        letters.add('g');
     }
 
     /**
@@ -265,6 +266,39 @@ public class CalculatorTest {
         char variable = 'f';
         calculator.saveIntoVariable(variable);
     
+    }
+    
+    /**
+     * Test of saveIntoStack
+     *@throws stackIsEmptyException
+     * @throws VariableValueException
+     */
+    @Test
+    public void testSaveIntoStack() throws VariableValueException, stackIsEmptyException {
+        
+         calculator.getVar().setVariableValue(letters.get(4), number1);
+         calculator.saveIntoStack(letters.get(4));
+         ComplexNumber number = calculator.getModel().getFirstComplexNumber();
+         ComplexNumber var1 = calculator.getVar().getVariableValue(letters.get(4));
+         assertEquals(number1,var1);
+        
+    }
+    
+    /**
+     * Test of addToVariable
+     * @throws stackIsEmptyException
+     * @throws VariableValueException
+     */
+    @Test
+    public void testAddToVariable() throws stackIsEmptyException, VariableValueException {
+        calculator.getModel().getStack().push(number1);
+        calculator.getVar().setVariableValue(letters.get(5), number1);
+        calculator.addToVariable(letters.get(5));
+        ComplexNumber num2 = calculator.getVar().getVariableValue(letters.get(5));
+        calculator.saveIntoStack(letters.get(5));
+        ComplexNumber num = calculator.getModel().getFirstComplexNumber();
+        assertEquals(num, num2);
+      
     }
     
     
