@@ -1,5 +1,6 @@
 # ProjectSE_Group23
-Organization of work in SCRUM
+Organization of work in SCRUM.
+
 The project involves the use of the SCRUM methodology, one of the most famous AGILE
 methodologies.
 The first week of the work included a pre-gaming phase, during which the work was organized
@@ -13,6 +14,7 @@ The user stories were obtained trying to respect the customer's point of view ac
 format typically required by the Scrum methodology (As a… I want… so that I can…).
 A Trello board was used, at the following url:
 https://trello.com/b/KoUWrhdV/seprojectgroup23
+
 All team members have access to it . A score was assigned to each user story, defining it in an
 online meeting between team members The Planning Poker mode was used, through the
 Serie of Fibonacci for the choice of the numerical value. Acceptance criteria have been defined
