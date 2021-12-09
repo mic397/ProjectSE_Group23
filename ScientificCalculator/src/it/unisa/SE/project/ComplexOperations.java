@@ -151,8 +151,8 @@ public class ComplexOperations {
     public static ComplexNumber sqrt(ComplexNumber number1) throws ArgumentNotDefinedException {
         double mod = mod(number1);
         double arg = arg(number1);
-        double realTot = Math.round((Math.sqrt(mod) * Math.cos(arg / 2)) * 1000d) / 1000d;
-        double immTot = Math.round((Math.sqrt(mod) * Math.sin(arg / 2)) * 1000d) / 1000d;
+        double realTot = Math.sqrt(mod) * Math.cos(arg / 2) ;
+        double immTot = Math.sqrt(mod) * Math.sin(arg / 2);
         ComplexNumber Result = new ComplexNumber(realTot, immTot);
         return Result;
     }
