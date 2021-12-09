@@ -469,8 +469,7 @@ public class GUI extends javax.swing.JFrame {
     private void saveIntoVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoVariableActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
         try {
-            String messageSuccess = "The value of variable " + var + " is: "
-                     + Model.getFirstComplexNumber();
+             String messageSuccess= "The value of variable " + var + " is: " + Model.getFirstComplexNumber();
             char va1 = var.charAt(0);
             calculator.saveIntoVariable(va1);
             JOptionPane.showMessageDialog(this, messageSuccess,
@@ -483,6 +482,7 @@ public class GUI extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE
             );
         }
+        printOnTextArea();
     }//GEN-LAST:event_saveIntoVariableActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -502,14 +502,14 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_sqrtActionPerformed
 
     private void saveIntoStackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoStackActionPerformed
-
+      
         String value = (String) jComboBox2.getSelectedItem();
         char va1 = value.charAt(0);
 
         try {
             calculator.saveIntoStack(va1);
         } catch (VariableValueException ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
         this.printOnTextArea();
     }//GEN-LAST:event_saveIntoStackActionPerformed

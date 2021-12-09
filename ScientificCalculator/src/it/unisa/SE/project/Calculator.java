@@ -198,11 +198,16 @@ public class Calculator {
      */
     public void saveIntoVariable(char variables) throws stackIsEmptyException {
         ComplexNumber number = Model.getFirstComplexNumber();
+       
         if (number == null) {
             throw new stackIsEmptyException();
         } else {
+            Model.removeFirstComplexNumber();
             var.setVariableValue(variables, number);
+            
         }
+        
+        
     }
 
     /**
@@ -215,7 +220,9 @@ public class Calculator {
     public void saveIntoStack(char variables) throws VariableValueException {
 
         ComplexNumber number = var.getVariableValue(variables);
-        
+        if(number == null){
+            throw new VariableValueException();
+        }
         Model.insertComplexNumber(number);
 
     }
@@ -242,4 +249,31 @@ public class Calculator {
             Model.removeFirstComplexNumber();
             var.setVariableValue(variable, ComplexOperations.sub(number1, number2));
     } 
+    
+     public void insertInStack(ComplexNumber num){
+        Model.insertComplexNumber(num);
+    }
+    
+    public void swap() throws UnderTwoElementsException,stackIsEmptyException {
+        Model.swap();
+    }
+    
+    public void dup() throws stackIsEmptyException {
+        Model.duplicateFirst();
+    }
+     
+    public void clear() throws stackIsEmptyException {
+        Model.clearModel();
+    }
+    
+    public void drop() throws stackIsEmptyException{
+        Model.removeFirstComplexNumber();
+    }
+    
+    
+    public void over() throws UnderTwoElementsException, stackIsEmptyException{
+        Model.over();
+    }
+    
+    
 }
