@@ -8,6 +8,7 @@ import ProjectException.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import Command.*;
 
 /**
  *
@@ -18,6 +19,7 @@ public class GUI extends javax.swing.JFrame {
     private Model model;
     Calculator calculator;
     private final static int maxValues = 12;
+    private CommandInvoker inv;
 
     /**
      * Creates new form GUI
@@ -28,6 +30,7 @@ public class GUI extends javax.swing.JFrame {
         this.textArea.setEditable(false);
         model = new Model();
         calculator = Calculator.getCalculator();
+        inv = new CommandInvoker(calculator);
     }
 
     /**
@@ -377,45 +380,55 @@ public class GUI extends javax.swing.JFrame {
 
     private void sumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumActionPerformed
         try {
-            this.calculator.sum();
+            inv.sum.execute();
         } catch (stackIsEmptyException | UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_sumActionPerformed
 
     private void subActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subActionPerformed
         try {
-            this.calculator.sub();
+            inv.sub.execute();
         } catch (stackIsEmptyException | UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_subActionPerformed
 
     private void mulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulActionPerformed
         try {
-            this.calculator.mul();
+            inv.mul.execute();
         } catch (stackIsEmptyException | UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_mulActionPerformed
 
     private void divActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divActionPerformed
         try {
-            this.calculator.div();
+            inv.div.execute();
         } catch (stackIsEmptyException | UnderTwoElementsException | ArithmeticException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_divActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
         try {
-            Model.clearModel();
+            inv.clear.execute();
         } catch (stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.textArea.setText("");
     }//GEN-LAST:event_ClearActionPerformed
@@ -423,9 +436,11 @@ public class GUI extends javax.swing.JFrame {
     private void swapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapActionPerformed
         String message = "There aren't two elements in the stack";
         try {
-            Model.swap();
+            inv.swap.execute();
         } catch (UnderTwoElementsException | stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, message);
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_swapActionPerformed
@@ -457,11 +472,13 @@ public class GUI extends javax.swing.JFrame {
         String mess = "There aren't two elemento for pushes a copy of the second last element on the stack!";
 
         try {
-            Model.over();
+            inv.over.execute();
         } catch (UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, mess);
         } catch (stackIsEmptyException ex1) {
             JOptionPane.showMessageDialog(rootPane, ex1.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_joverActionPerformed
@@ -494,9 +511,11 @@ public class GUI extends javax.swing.JFrame {
 
         String mess = "There isn't an element on the stack!";
         try {
-            this.calculator.sqrt();
+            inv.sqrt.execute();
         } catch (ArgumentNotDefinedException | stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, mess);
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_sqrtActionPerformed
@@ -537,27 +556,33 @@ public class GUI extends javax.swing.JFrame {
 
     private void dropButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropButtonActionPerformed
         try {
-            Model.removeFirstComplexNumber();
+            inv.drop.execute();
         } catch (stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_dropButtonActionPerformed
 
     private void dupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dupButtonActionPerformed
         try {
-            Model.duplicateFirst();
+            inv.dup.execute();
         } catch (stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_dupButtonActionPerformed
 
     private void invertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invertButtonActionPerformed
         try {
-            this.calculator.invertSign();
+            inv.invert.execute();
         } catch (stackIsEmptyException | UnderOneElementException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.printOnTextArea();
     }//GEN-LAST:event_invertButtonActionPerformed
