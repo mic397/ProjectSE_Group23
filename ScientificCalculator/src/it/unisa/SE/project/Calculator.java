@@ -202,11 +202,11 @@ public class Calculator {
         if (number == null) {
             throw new stackIsEmptyException();
         } else {
-            Model.removeFirstComplexNumber();
+             Model.removeFirstComplexNumber();
             var.setVariableValue(variables, number);
-            
+               
         }
-        
+       
         
     }
 

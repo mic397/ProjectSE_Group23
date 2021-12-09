@@ -251,7 +251,7 @@ public class CalculatorTest {
          calculator.saveIntoVariable(letters.get(3));
          ComplexNumber number = calculator.getModel().getFirstComplexNumber();
          ComplexNumber var1 = calculator.getVar().getVariableValue(letters.get(3));
-         assertEquals(number,var1);
+         assertEquals(number2,var1);
         
     }
     
