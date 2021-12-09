@@ -223,17 +223,17 @@ public class CalculatorTest {
     public void testSqrt() throws stackIsEmptyException, ArgumentNotDefinedException{
         calculator.getModel().getStack().push(number1);
         calculator.getModel().getStack().push(number3);
-         ComplexNumber expected1 = new ComplexNumber(3.424,-1.314);
+         ComplexNumber expected1 = new ComplexNumber(3.4244433158597993,-1.3140821981660262);
         assertEquals(expected1, ComplexOperations.sqrt(number3));
         
         calculator.getModel().getStack().push(number2);
         calculator.getModel().getStack().push(number4);
-        ComplexNumber expected2 = new ComplexNumber(2.121,2.121);
+        ComplexNumber expected2 = new ComplexNumber(2.121320343559643,2.1213203435596424);
         assertEquals(expected2, ComplexOperations.sqrt(number4));
         
         calculator.getModel().getStack().push(number3);
         calculator.getModel().getStack().push(number5);
-        ComplexNumber expected3 = new ComplexNumber(4.472,0);
+        ComplexNumber expected3 = new ComplexNumber(4.47213595499958,0);
         assertEquals(expected3, ComplexOperations.sqrt(number5));
       
     }
@@ -249,7 +249,6 @@ public class CalculatorTest {
         
          calculator.getModel().getStack().push(number2);
          calculator.saveIntoVariable(letters.get(3));
-         ComplexNumber number = calculator.getModel().getFirstComplexNumber();
          ComplexNumber var1 = calculator.getVar().getVariableValue(letters.get(3));
          assertEquals(number2,var1);
         
