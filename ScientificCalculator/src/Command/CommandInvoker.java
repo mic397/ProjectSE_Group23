@@ -1,14 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Command;
 import it.unisa.SE.project.*;
 
+import java.io.FileInputStream;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
+import java.io.*;
 
 
 /**
@@ -29,10 +33,11 @@ public class CommandInvoker {
     public Command  swap;
     public Command  over;
     public Map<String,Command> map;
-    
-    
+    public Map<String,String> map1;
+    public Model c;
     public CommandInvoker(Calculator c){
         map = new HashMap<>();
+        map1 = new HashMap<>();
         this.map.put("+",new PlusCommand(c));
         this.map.put("-",new MinusCommand(c));
         this.map.put("*",new ProdCommand(c));
@@ -57,7 +62,7 @@ public class CommandInvoker {
         this.swap=  new SwapCommand(c);
         this.over=  new OverCommand(c);
         
-    
+        
     }
     
     public boolean addCommand(String name, String comString) throws Exception{
@@ -66,6 +71,7 @@ public class CommandInvoker {
            List<Command> list = (new Parser()).parser(comString,this);
            Command com2 = new UserDefinedCommand(list);
            map.put(name,com2);
+           map1.put(name,comString);
            return true;
         
         } else{
@@ -91,6 +97,7 @@ public class CommandInvoker {
            return false;
         }
          map.remove(name);
+          map1.remove(name);
          return true;
          
    }
@@ -106,11 +113,26 @@ public class CommandInvoker {
            List<Command> list = (new Parser()).parser(command,this);
            Command com2 = new UserDefinedCommand(list);
            map.put(name,com2);
-           
+           map1.put(name,command);
        }
          
            
    }
    
    
+   public void save(String filename) throws Exception, IOException{  
+       if(filename != null) {
+    PrintWriter op = new PrintWriter(new BufferedWriter(new FileWriter(filename))); 
+ 
+    for (Map.Entry<String, String> tablehash : map1.entrySet()) { 
+      op.write(tablehash.getKey() + ": " + tablehash.getValue() + "\n"); 
+                } 
+      op.close(); 
+      
+}
+       else{
+          throw new IOException();
+       
+}
+}
 }

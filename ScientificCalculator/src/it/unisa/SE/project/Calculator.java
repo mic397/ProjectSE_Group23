@@ -4,7 +4,12 @@
  */
 package it.unisa.SE.project;
 
+import Command.Command;
+import Command.CommandInvoker;
 import ProjectException.*;
+import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
 /**
  *
@@ -16,7 +21,8 @@ public class Calculator {
     private static Calculator instance = null;
     private final ParserString parser = new ParserString();
     private Variables var;
-
+    
+    
     public void setVar(Variables var) {
         this.var = var;
     }
@@ -275,5 +281,5 @@ public class Calculator {
         Model.over();
     }
     
-    
+   
 }

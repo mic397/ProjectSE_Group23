@@ -153,11 +153,11 @@ public class ComplexOperationsTest {
         ComplexNumber complex4 = ComplexOperations.sqrt(number4);
         ComplexNumber complex5 = ComplexOperations.sqrt(number5);
 
-        ComplexNumber expected1 = new ComplexNumber(3.432, 2.186);
-        ComplexNumber expected2 = new ComplexNumber(1.801, 2.499);
-        ComplexNumber expected3 = new ComplexNumber(3.43, -0.875);
-        ComplexNumber expected4 = new ComplexNumber(4.528, 0.0);
-        ComplexNumber expected5 = new ComplexNumber(1.936, -1.936);
+        ComplexNumber expected1 = new ComplexNumber(3.4316865647409327, 2.1855142824112193);
+        ComplexNumber expected2 = new ComplexNumber(1.8009487750218132, 2.498682951126967);
+        ComplexNumber expected3 = new ComplexNumber(3.4300119596104666, -0.8746325188734031);
+        ComplexNumber expected4 = new ComplexNumber(4.527692569068709, 0.0);
+        ComplexNumber expected5 = new ComplexNumber(1.9364916731037085, -1.9364916731037083);
 
         assertEquals(expected1, complex1);
         assertEquals(expected2, complex2);

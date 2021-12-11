@@ -9,7 +9,7 @@ import ProjectException.notAcceptableValueException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import ProjectException.OperationNotAllowedException;
 /**
  *
  * @author Michela
@@ -17,6 +17,7 @@ import java.util.List;
 public class Parser {
     ParserString parse;
     Calculator cal;
+    
     public Parser(){
        parse = new ParserString(); 
        cal = Calculator.getCalculator();
@@ -27,7 +28,9 @@ public class Parser {
        List<Command> listCommand = new ArrayList<>();
        
        List<String> operationList = Arrays.asList(operation.split(" ")); 
-       
+       // if(listCommand.contains("swap") || listCommand.contains("over") || listCommand.contains("dup")){
+           // throw new OperationNotAllowedException("Insert not allowed");
+       // }
        for(int i=0; i<operationList.size(); i++){
            Command comm = inv.map.get(operationList.get(i)) ;
            if(comm==null){
