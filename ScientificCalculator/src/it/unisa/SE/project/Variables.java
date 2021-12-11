@@ -57,9 +57,10 @@ public class Variables{
     
     /**
      * This method return the ComplexNumbers associated to the key
+     * 
      * @param key
      * @return ComplexNumber
-     * @throws ProjectException.VariableValueException
+     * @throws VariableValueException
      */
     public ComplexNumber getVariableValue(char key) throws VariableValueException{
         ComplexNumber num = map.get(key);

@@ -46,6 +46,11 @@ public class ComplexOperationsTest {
         number10 = new ComplexNumber(1, 0);
     }
 
+     /**
+     * Verify all possible case 
+     *
+     * @throws notAcceptableValueException
+     */
     @Test
     public void testSum() {
         ComplexNumber expected12 = new ComplexNumber(4.0, 24.0);
@@ -166,15 +171,7 @@ public class ComplexOperationsTest {
         assertEquals(expected5, complex5);
     }
 
-    /**
-     * /**
-     * Verify that the multiplication between a complex number with real and
-     * imaginary parts equal to zero and a complex number is null.
-     *
-     * Verify that the multiplication between a complex number and the neutral
-     * value (with real part equals to one and imaginary part equal to zero) is
-     * equal to the number itself
-     */
+    
     @Test
     public void testMul() {
         ComplexNumber expected1 = new ComplexNumber(-156.0, 18.0);

@@ -212,6 +212,10 @@ public class ModelTest {
         Model.over();
     }
     
+    
+     /**
+     * This method return the last 12 element on the top of the stack
+     */
     @Test
     public void testlastTwelveElements(){
         StringBuilder ret = new StringBuilder();

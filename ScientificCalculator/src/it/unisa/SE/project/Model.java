@@ -52,7 +52,7 @@ public class Model {
     }
 
     /**
-     * "Drop" removes the Complex Number from the Stack's top
+     * "drop" removes the Complex Number from the Stack's top
      *
      * @throws ProjectException.stackIsEmptyException if stack is empty
      */

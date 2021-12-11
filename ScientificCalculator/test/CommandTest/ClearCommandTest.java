@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
-package Command;
+package CommandTest;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,20 +11,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import Command.CommandInvoker;
+import Command.CommandInvoker;
 import it.unisa.SE.project.*;
 /**
  *
- * @author User
+ * @author Enza
  */
-public class DropCommandTest {
-    
+public class ClearCommandTest {
     private ComplexNumber number1;
     private ComplexNumber number2;
     
-    private Calculator calc;
+      private Calculator calc;
     CommandInvoker inv; 
     
-    public DropCommandTest() {
+    public ClearCommandTest() {
     }
     
    
@@ -47,14 +47,13 @@ public class DropCommandTest {
     }
 
     /**
-     * Test of execute method, of class DropCommand.
+     * Test of execute method, of class ClearCommand.
      */
     @Test
     public void testExecute() throws Exception {
-        this.insertValues();
-        int size = Model.size();
-        inv.drop.execute();
-     assertEquals(Model.size(), size - 1);  
+       this.insertValues();
+       inv.clear.execute();
+       assertEquals(0, Model.size());  
     }
     
 }

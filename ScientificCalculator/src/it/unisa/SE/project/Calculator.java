@@ -249,6 +249,13 @@ public class Calculator {
         
     }
     
+    /**
+     *  This method takes the top element from the stack and sub it to the value
+     * of the variable "x"
+     *  @param variable
+     * @throws stackIsEmptyException
+     * @throws VariableValueException
+     */
     public void minToVariable(char variable) throws stackIsEmptyException, VariableValueException {
             ComplexNumber number1 = this.var.getVariableValue(variable);
             ComplexNumber number2 = Model.getFirstComplexNumber();
@@ -256,27 +263,54 @@ public class Calculator {
             var.setVariableValue(variable, ComplexOperations.sub(number1, number2));
     } 
     
+    
      public void insertInStack(ComplexNumber num){
         Model.insertComplexNumber(num);
     }
-    
+     
+     
+    /**
+     * "swap" that " that exchanges the last two elements on the stack;
+     *
+     * @throws UnderTwoElementsException
+     * @throws stackIsEmptyException
+     */
     public void swap() throws UnderTwoElementsException,stackIsEmptyException {
         Model.swap();
     }
     
+     /**
+     * "dup" that pushes a copy of the Stack's top element on the stack;
+     *
+     * @throws stackIsEmptyException da testare
+     */
     public void dup() throws stackIsEmptyException {
         Model.duplicateFirst();
     }
      
+    /**
+     * "clear" removes all Complex Numbers from the Stack
+     * @throws stackIsEmptyException da testare
+     */
     public void clear() throws stackIsEmptyException {
         Model.clearModel();
     }
     
+    /**
+     * "drop" removes the Complex Number from the Stack's top
+     *
+     * @throws ProjectException.stackIsEmptyException if stack is empty
+     */
     public void drop() throws stackIsEmptyException{
         Model.removeFirstComplexNumber();
     }
     
-    
+     /**
+     * "over" that  that pushes a copyof the second last element.
+     *
+     * @throws UnderTwoElementsException
+     * @throws ProjectException.stackIsEmptyException
+     */
     public void over() throws UnderTwoElementsException, stackIsEmptyException{
         Model.over();
     }
