@@ -63,7 +63,6 @@ public class ParserString {
     /**
      * The method checks whether the input string is a real number.
      *
-     * @author emanu
      * @param text , stringa da dover controllare.
      * @return true if the string is a real number, false otherwise.
      */
