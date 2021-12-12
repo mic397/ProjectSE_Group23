@@ -17,7 +17,28 @@ public class ParserString {
     private static final String single_number = "__SINGLENUMBER__";
     private static final String invalid_insert = "__INVALID__";
     private static final String continue_checking = "__CHECKING__";
-
+    
+    /**
+     * The method returns the string representing the operation
+     *
+     * @param text , stringa da dover modificare.
+     * @return modified string
+     */
+     public String checkOperation(String text){
+        text = text.replaceAll("\\n", "");
+        if (text.startsWith("+") || text.startsWith("-")) {
+            StringBuilder sb = new StringBuilder(text);
+            // Removing the first character
+            // of a string
+            sb.deleteCharAt(0);
+            // Converting StringBuilder into a string
+            // and return the modified string
+            return sb.toString();
+        }
+        return text;
+    }
+     
+    
     /**
      * The method returns the string in which spaces were stripped whites and
      * also eliminates any + or - present at the beginning of it.
@@ -185,9 +206,11 @@ public class ParserString {
             if (!text.contains("j")) {
                 return new ComplexNumber(Double.parseDouble(text), 0.);
             } else {
-                if (text.length() == 1) {
+                if(text.equals("+j") || text.equals("j")){
                     text = "1j";
-                }
+                }else if(text.equals("-j")){
+                  text = "-1j";  
+                }   
                 return new ComplexNumber(0., Double.parseDouble(text.replace("j", "")));
             }
         }
