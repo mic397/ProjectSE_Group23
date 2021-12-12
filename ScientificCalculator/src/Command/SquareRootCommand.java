@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package Command;
+import ProjectException.ArgumentNotDefinedException;
+import ProjectException.UnderOneElementException;
+import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.*;
 
 
@@ -22,9 +25,8 @@ public class SquareRootCommand implements Command{
     
     
     @Override
-    public void execute() throws Exception {
+    public void execute() throws UnderOneElementException, stackIsEmptyException, ArgumentNotDefinedException  {
         c.sqrt();
-        
     }
-    
+
 }
