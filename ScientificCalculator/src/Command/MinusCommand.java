@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package Command;
-import it.unisa.SE.project.*;
 
+import ProjectException.UnderOneElementException;
+import ProjectException.stackIsEmptyException;
+import it.unisa.SE.project.*;
 
 /**
  *
@@ -14,15 +16,14 @@ import it.unisa.SE.project.*;
 public class MinusCommand implements Command {
 
     private Calculator c;
-    
-    public MinusCommand(Calculator c){
+
+    public MinusCommand(Calculator c) {
         this.c = c;
     }
-    
-    
+
     @Override
-    public void execute() throws Exception {
+    public void execute() throws UnderOneElementException, stackIsEmptyException {
         c.sub();
-        
     }
+
 }
