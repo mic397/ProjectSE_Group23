@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  * @author aniel
  */
-public class SaverFile implements Serializable, Command {
+public class SaverFile implements Command {
 
     private String nameFile;
     private PrintWriter out;
