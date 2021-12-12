@@ -502,7 +502,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * to insert value on text area
-     * @param evt 
+     *
+     * @param evt
      */
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
         String text = inputField.getText();
@@ -538,7 +539,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the sum updating the GUI
-     * @param evt 
+     *
+     * @param evt
      */
     private void sumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumActionPerformed
         try {
@@ -556,7 +558,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the subtraction updating the GUI
-     * @param evt 
+     *
+     * @param evt
      */
     private void subActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subActionPerformed
         try {
@@ -574,7 +577,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the multiplication updating the GUI
-     * @param evt 
+     *
+     * @param evt
      */
     private void mulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulActionPerformed
         try {
@@ -592,7 +596,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the division operation updating the GUI
-     * @param evt 
+     *
+     * @param evt
      */
     private void divActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divActionPerformed
         try {
@@ -610,7 +615,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute a "clear" operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
         try {
@@ -628,7 +634,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute a "swap" operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void swapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swapActionPerformed
         String message = "There aren't two elements in the stack";
@@ -660,7 +667,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute a "over" operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void joverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joverActionPerformed
 
@@ -683,7 +691,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the saving into variable
-     * @param evt 
+     *
+     * @param evt
      */
     private void saveIntoVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoVariableActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
@@ -711,7 +720,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the square root operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void sqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sqrtActionPerformed
 
@@ -731,7 +741,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the saving into stack
-     * @param evt 
+     *
+     * @param evt
      */
     private void saveIntoStackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoStackActionPerformed
 
@@ -748,7 +759,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the adding into variable selected of the first value on the stack
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonAddVarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddVarActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
@@ -773,7 +785,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the "drop" operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void dropButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropButtonActionPerformed
         try {
@@ -791,7 +804,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the "dup" operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void dupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dupButtonActionPerformed
         try {
@@ -809,7 +823,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the "invertSign" operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void invertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invertButtonActionPerformed
         try {
@@ -826,8 +841,10 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_invertButtonActionPerformed
 
     /**
-     * execute the subtracting into variable selected of the first value on the stack
-     * @param evt 
+     * execute the subtracting into variable selected of the first value on the
+     * stack
+     *
+     * @param evt
      */
     private void minVarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minVarButtonActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
@@ -851,7 +868,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the "insert user-defined" operation
-     * @param evt 
+     *
+     * @param evt
      */
     private void computeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeButtonActionPerformed
         try {
@@ -859,13 +877,13 @@ public class GUI extends javax.swing.JFrame {
             String text = jTextField1.getText();
             String name = jTextField2.getText();
             String messageSuccess = "the operation is stored correctly";
-            inv.addCommand(name, text);
+            inv.addCommand(name, text); 
             tableModel.insertRow(0, new Object[]{name, text});
             JOptionPane.showMessageDialog(this, messageSuccess,
                     "Success Operation: ",
                     JOptionPane.INFORMATION_MESSAGE);
             jTextField1.setText("");
-            jTextField2.setText("");
+            jTextField2.setText(""); 
         } catch (TextOperationPresent | ElementNotAvailableException | notAcceptableValueException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(),
                     "Error Operation: ",
@@ -875,14 +893,15 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * execute the "delete user-defined" operation
-     * @param evt 
-     */   
+     *
+     * @param evt
+     */
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         try {
             this.updateOperation.setEnabled(false);
             int indexSelected = checkIndexTable();
             String nameOperation = tableModel.getValueAt(indexSelected, 0).toString();
-            inv.deleteCommand(tableModel.getValueAt(indexSelected, 1).toString());
+            inv.deleteCommand(nameOperation);
             tableModel.removeRow(indexSelected);
             JOptionPane.showMessageDialog(rootPane, "The operation " + "'"
                     + nameOperation + "'" + " is deleted correctly.", "Information:", JOptionPane.INFORMATION_MESSAGE);
@@ -953,8 +972,10 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
-     * enable the "modify user-defined" operation when user selects a row by operation table
-     * @param evt 
+     * enable the "modify user-defined" operation when user selects a row by
+     * operation table
+     *
+     * @param evt
      */
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         try {
