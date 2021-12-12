@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package Command;
+import ProjectException.UnderOneElementException;
+import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.*;
 
 
@@ -20,10 +22,13 @@ public class ClearCommand implements Command{
         this.c = c;
     }
     
-    
+    /**
+     * 
+     * @throws stackIsEmptyException
+     * @throws UnderOneElementException 
+     */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws stackIsEmptyException, UnderOneElementException  {
         c.clear();
-        
     }
 }
