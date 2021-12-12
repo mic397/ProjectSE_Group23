@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  * @author aniel
  */
-public class SaverFile implements Command {
+public class SaverFile  {
 
     private String nameFile;
     private PrintWriter out;
@@ -30,7 +30,9 @@ public class SaverFile implements Command {
         this.obj = obj;
     }
 
-    @Override
+    /**
+     * execute the saving operation
+     */
     public void execute()  {
        out.print(obj);
        out.close();
