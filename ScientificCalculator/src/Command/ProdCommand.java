@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 package Command;
+
+import ProjectException.UnderOneElementException;
+import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.*;
-
-
 
 /**
  *
@@ -15,15 +16,15 @@ import it.unisa.SE.project.*;
 public class ProdCommand implements Command {
 
     private Calculator c;
-    
-    public ProdCommand(Calculator c){
+
+    public ProdCommand(Calculator c) {
         this.c = c;
     }
-    
-    
+
     @Override
-    public void execute() throws Exception {
+    public void execute() throws UnderOneElementException, stackIsEmptyException {
         c.mul();
-        
     }
+
+   
 }
