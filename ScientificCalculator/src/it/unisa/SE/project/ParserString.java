@@ -17,6 +17,22 @@ public class ParserString {
     private static final String single_number = "__SINGLENUMBER__";
     private static final String invalid_insert = "__INVALID__";
     private static final String continue_checking = "__CHECKING__";
+
+    public static String getComplex_number() {
+        return complex_number;
+    }
+
+    public static String getSingle_number() {
+        return single_number;
+    }
+
+    public static String getInvalid_insert() {
+        return invalid_insert;
+    }
+
+    public static String getContinue_checking() {
+        return continue_checking;
+    }
     
     /**
      * The method returns the string representing the operation
