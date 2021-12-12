@@ -9,11 +9,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Command.*;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
 /**
  *
  * @author Michela
@@ -25,8 +34,9 @@ public class GUI extends javax.swing.JFrame {
     private final static int maxValues = 12;
     private CommandInvoker inv;
     private DefaultTableModel tableModel;
-    String mess= "command not found";
-   
+    String mess = "command not found";
+    private JFileChooser fileChooser;
+
     /**
      * Creates new form GUI
      */
@@ -37,7 +47,12 @@ public class GUI extends javax.swing.JFrame {
         model = new Model();
         calculator = Calculator.getCalculator();
         inv = new CommandInvoker(calculator);
-        tableModel = (DefaultTableModel)table.getModel();
+        tableModel = (DefaultTableModel) table.getModel();
+        setJMenuBar(this.createMenuBar());
+        fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileCalculatorFilter());
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        this.updateOperation.setEnabled(false);
     }
 
     /**
@@ -45,9 +60,12 @@ public class GUI extends javax.swing.JFrame {
      * various functions via the keyboard
      */
     public final void setToolTipsForKeyCommand() {
-        clearButton.setToolTipText("Delete all elements from the stack (Ctrl+Q)");
-        dropButton.setToolTipText("Remove the last inserted element from the stack (Ctrl+D)");
-        dupButton.setToolTipText("Duplicate the last inserted element updating the stack (Ctrl+F)");
+        clearButton.setToolTipText("Delete all elements from the stack (Alt+Q)");
+        clearButton.setMnemonic(KeyEvent.VK_Q);
+        dropButton.setToolTipText("Remove the last inserted element from the stack (Alt+D)");
+        dropButton.setMnemonic(KeyEvent.VK_D);
+        dupButton.setToolTipText("Duplicate the last inserted element updating the stack (Alt+U)");
+        dupButton.setMnemonic(KeyEvent.VK_U);
     }
 
     /**
@@ -60,6 +78,7 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton5 = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         inputField = new javax.swing.JTextField();
@@ -92,8 +111,8 @@ public class GUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        ReloadFromFile = new javax.swing.JButton();
-        ButtonSave = new javax.swing.JButton();
+        executeOperation = new javax.swing.JButton();
+        updateOperation = new javax.swing.JButton();
 
         jButton5.setText("jButton5");
 
@@ -102,10 +121,10 @@ public class GUI extends javax.swing.JFrame {
         textArea.setColumns(20);
         textArea.setRows(5);
         textArea.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 textAreaAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -252,7 +271,7 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel4.setText("User-defined operations");
 
-        computeButton.setText("Compute");
+        computeButton.setText("Insert Operation");
         computeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 computeButtonActionPerformed(evt);
@@ -263,6 +282,12 @@ public class GUI extends javax.swing.JFrame {
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
+            }
+        });
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
             }
         });
 
@@ -277,20 +302,33 @@ public class GUI extends javax.swing.JFrame {
             new String [] {
                 "Name", "Operations"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(table);
 
-        ReloadFromFile.setText("reload");
-        ReloadFromFile.addActionListener(new java.awt.event.ActionListener() {
+        executeOperation.setText("Execute");
+        executeOperation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReloadFromFileActionPerformed(evt);
+                executeOperationActionPerformed(evt);
             }
         });
 
-        ButtonSave.setText("save");
-        ButtonSave.addActionListener(new java.awt.event.ActionListener() {
+        updateOperation.setText("Update operation");
+        updateOperation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonSaveActionPerformed(evt);
+                updateOperationActionPerformed(evt);
             }
         });
 
@@ -299,81 +337,93 @@ public class GUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(invertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(sqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(53, 53, 53)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(invertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(sqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(53, 53, 53)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(169, 169, 169)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(25, 25, 25)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(executeOperation))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(25, 25, 25)
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(updateOperation)
+                                                .addGap(18, 18, 18)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(computeButton)
+                                            .addComponent(deleteButton)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(390, 390, 390)
+                                .addComponent(jLabel4)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(dropButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(dupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(37, 37, 37)
+                                        .addGap(77, 77, 77)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(swap, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButtonMin, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButtonAddVar)
-                                        .addGap(35, 35, 35)
-                                        .addComponent(minVarButton)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(65, 65, 65)
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(224, 224, 224)
-                                                .addComponent(jLabel4))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(169, 169, 169)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jLabel5)
-                                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGap(25, 25, 25)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jLabel6)
-                                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(computeButton)
-                                                        .addGap(35, 35, 35)
-                                                        .addComponent(deleteButton))))))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(52, 52, 52)
+                                        .addComponent(jButtonAddVar)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(ReloadFromFile)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(dropButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(dupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(swap, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(ButtonSave))
                                         .addGap(18, 18, 18)
-                                        .addComponent(over, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(over, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(minVarButton)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(jLabel3)))))
+                        .addContainerGap(135, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addContainerGap(643, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,21 +432,33 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(dropButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(dupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(swap, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(over, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButtonMin)
+                                    .addComponent(jButtonAddVar)
+                                    .addComponent(minVarButton)
+                                    .addComponent(jButton6)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(39, 39, 39)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -411,36 +473,25 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(invertButton)
                             .addComponent(sqrt)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton6)
-                            .addComponent(jButtonMin)
-                            .addComponent(jButtonAddVar)
-                            .addComponent(minVarButton)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(computeButton)
-                                    .addComponent(deleteButton)
-                                    .addComponent(ReloadFromFile))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(ButtonSave)))
+                                    .addComponent(updateOperation))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(deleteButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(executeOperation))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
@@ -501,7 +552,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (stackIsEmptyException | UnderTwoElementsException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         } catch (Exception ex1) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -529,7 +580,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (stackIsEmptyException | UnderTwoElementsException | ArithmeticException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         } catch (Exception ex1) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -543,7 +594,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         } catch (Exception ex1) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -558,7 +609,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (UnderTwoElementsException | stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, message);
         } catch (Exception ex1) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -577,15 +628,6 @@ public class GUI extends javax.swing.JFrame {
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             insertButton.doClick();
         }
-        if (evt.isControlDown() && evt.getKeyCode() == java.awt.event.KeyEvent.VK_Q) {
-            clearButton.doClick();
-        }
-        if (evt.isControlDown() && evt.getKeyCode() == java.awt.event.KeyEvent.VK_D) {
-            dropButton.doClick();
-        }
-        if (evt.isControlDown() && evt.getKeyCode() == java.awt.event.KeyEvent.VK_F) {
-            dupButton.doClick();
-        }
     }//GEN-LAST:event_inputFieldKeyPressed
 
     private void joverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joverActionPerformed
@@ -599,7 +641,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (stackIsEmptyException ex1) {
             JOptionPane.showMessageDialog(rootPane, ex1.getMessage());
         } catch (Exception ex1) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -610,7 +652,7 @@ public class GUI extends javax.swing.JFrame {
     private void saveIntoVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoVariableActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
         try {
-             String messageSuccess= "The value of variable " + var + " is: " + Model.getFirstComplexNumber();
+            String messageSuccess = "The value of variable " + var + " is: " + Model.getFirstComplexNumber();
             char va1 = var.charAt(0);
             calculator.saveIntoVariable(va1);
             JOptionPane.showMessageDialog(this, messageSuccess,
@@ -639,7 +681,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (ArgumentNotDefinedException | stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, mess);
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -648,7 +690,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_sqrtActionPerformed
 
     private void saveIntoStackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveIntoStackActionPerformed
-      
+
         String value = (String) jComboBox2.getSelectedItem();
         char va1 = value.charAt(0);
 
@@ -663,7 +705,7 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonAddVarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddVarActionPerformed
         String var = (String) jComboBox2.getSelectedItem();
         try {
-            String messSucc= "The value of variable " + var + " is modified: "
+            String messSucc = "The value of variable " + var + " is modified: "
                     + var + " = " + var + " + " + "(" + Model.getFirstComplexNumber() + ")";
             char va1 = var.charAt(0);
             calculator.addToVariable(va1);
@@ -678,7 +720,7 @@ public class GUI extends javax.swing.JFrame {
             );
         }
         this.printOnTextArea();
-        
+
     }//GEN-LAST:event_jButtonAddVarActionPerformed
 
     private void dropButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropButtonActionPerformed
@@ -701,7 +743,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (stackIsEmptyException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         } catch (Exception ex1) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -715,7 +757,7 @@ public class GUI extends javax.swing.JFrame {
         } catch (stackIsEmptyException | UnderOneElementException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         } catch (Exception ex1) {
-             JOptionPane.showMessageDialog(this, mess,
+            JOptionPane.showMessageDialog(this, mess,
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -744,94 +786,266 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_minVarButtonActionPerformed
 
     private void computeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeButtonActionPerformed
-          
-        String text = jTextField1.getText();
-        String name = jTextField2.getText();
         try {
-            String messageSuccess= "the operation is stored correctly";
-            if(inv.addCommand(name,text)){
-            tableModel.insertRow(0,new Object[]{name,text});
-           
+            this.updateOperation.setEnabled(false);
+            String text = jTextField1.getText();
+            String name = jTextField2.getText();
+            String messageSuccess = "the operation is stored correctly";
+            inv.addCommand(name, text);
+            tableModel.insertRow(0, new Object[]{name, text});
             JOptionPane.showMessageDialog(this, messageSuccess,
                     "Success Operation: ",
                     JOptionPane.INFORMATION_MESSAGE);
-            
-            }
-            else{
-                
-                inv.modifyCommand(name, text); 
-                for(int i=0; i<tableModel.getRowCount();i++){
-                    String nameRow = tableModel.getValueAt(i, 0).toString();
-                    
-                    if(nameRow.equals(name)){  
-                       
-                        tableModel.setValueAt(text, i, 1);
-                        break;
-                    }
-                }
-            }inv.executeCommand(name);
-        } catch (Exception ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            jTextField1.setText("");
+            jTextField2.setText("");
+        } catch (TextOperationPresent | ElementNotAvailableException | notAcceptableValueException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    "Error Operation: ",
+                    JOptionPane.WARNING_MESSAGE);
         }
-        this.printOnTextArea();
     }//GEN-LAST:event_computeButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-         String name = jTextField2.getText();
-        String errorMessage = "command not found";
-      
-            if(inv.deleteCommand(name)){
-                for(int i=0; i<tableModel.getRowCount();i++){
-                    String nameRow = tableModel.getValueAt(i, 0).toString();
-                    System.out.println(nameRow);
-                    if(nameRow.equals(name)){
-                        
-                        tableModel.removeRow(i);
-                        break;
-                    }
-                  
-                }
-            }else
-                JOptionPane.showMessageDialog(rootPane, errorMessage,
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+        try {
+            this.updateOperation.setEnabled(false);
+            int indexSelected = checkIndexTable();
+            String nameOperation = tableModel.getValueAt(indexSelected, 0).toString();
+            inv.deleteCommand(tableModel.getValueAt(indexSelected, 1).toString());
+            tableModel.removeRow(indexSelected);
+            JOptionPane.showMessageDialog(rootPane, "The operation " + "'"
+                    + nameOperation + "'" + " is deleted correctly.", "Information:", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NoSelectedRowException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Attention:", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSaveActionPerformed
-         // TODO add your handling code here:
-        String errorMessage = "file not found";
-        Map<String,String> mapFile = new HashMap<>();
-        for(int i=0; i<tableModel.getRowCount();i++){
-           String nameRow = tableModel.getValueAt(i, 0).toString();
-           String opRow = tableModel.getValueAt(i, 1).toString();
-           mapFile.put(nameRow, opRow);
+    /**
+     *
+     * @return the index of row-selected table
+     * @throws NoSelectedRowException
+     */
+    private int checkIndexTable() throws NoSelectedRowException {
+        int indexTable = table.getSelectedRow();
+        if (indexTable == -1) {
+            throw new NoSelectedRowException("Select a row-command in table to execute it!");
         }
+        return indexTable;
+    }
+
+    /**
+     * execute the command selected, updating the text area.
+     *
+     * @param evt
+     */
+    private void executeOperationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeOperationActionPerformed
         try {
-            inv.saveCommand(mapFile, "file.txt");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, errorMessage,
-                    "error: ",
-                    JOptionPane.ERROR_MESSAGE);
+            this.updateOperation.setEnabled(false);
+            int indexTable = checkIndexTable();
+            inv.executeCommand(tableModel.getValueAt(indexTable, 0).toString());
+        } catch (NoSelectedRowException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Attention:", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_ButtonSaveActionPerformed
-  
-    private void ReloadFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReloadFromFileActionPerformed
-             String errorMessage = "file not found";
-        Map<String,String> addedCommands = new HashMap<>();
+        this.printOnTextArea();
+    }//GEN-LAST:event_executeOperationActionPerformed
+
+    /**
+     * modify a user-operation command selected
+     *
+     * @param evt
+     */
+    private void updateOperationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOperationActionPerformed
         try {
-           addedCommands = inv.reloadCommand("file.txt");
-            
-            for(Map.Entry<String,String> e : addedCommands.entrySet() ){
-            tableModel.insertRow(0,new Object[]{e.getKey(),e.getValue()});
+            String nameOp = this.jTextField2.getText();
+            String commandOp = this.jTextField1.getText();
+            inv.modifyCommand(nameOp, commandOp);
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                String nameRow = tableModel.getValueAt(i, 0).toString();
+
+                if (nameRow.equals(nameOp)) {
+                    tableModel.setValueAt(commandOp, i, 1);
+                    break;
+                }
             }
-            } catch (Exception ex) {
-             JOptionPane.showMessageDialog(this, errorMessage,
-                    "error: ",
-                    JOptionPane.ERROR_MESSAGE);
-        } 
-       
-    }//GEN-LAST:event_ReloadFromFileActionPerformed
+            JOptionPane.showMessageDialog(rootPane, "Operation modify completed .", "Information:", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NoSelectedRowException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Attention:", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_updateOperationActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        try {
+            this.updateOperation.setEnabled(true);
+            int indexTable = checkIndexTable();
+            String nameOp = tableModel.getValueAt(indexTable, 0).toString();
+            String commandOp = tableModel.getValueAt(indexTable, 1).toString();
+            this.jTextField2.setText(nameOp);
+            this.jTextField1.setText(commandOp);
+        } catch (NoSelectedRowException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Attention:", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_tableMouseClicked
+    /**
+     * It checks the accuracy of the extension provided by the user
+     */
+    private void checkNameFile(String nameFile) throws ExtensionFileException {
+        int indexExtension = nameFile.indexOf(".");
+        if (!nameFile.substring(indexExtension).equals(".txt")) {
+            throw new ExtensionFileException("This extension is not usable!\nUse (*.txt)");
+        }
+    }
+
+    /**
+     * import the User-defined operation model by a suitable file .
+     *
+     * @throws FileExistException
+     * @throws IOException
+     * @throws UnsuitableFileException
+     * @throws Exception
+     */
+    private void importFile() throws FileExistException, IOException, UnsuitableFileException, TextOperationPresent, ElementNotAvailableException, notAcceptableValueException {
+        int choose = fileChooser.showOpenDialog(rootPane);
+        if (choose == JFileChooser.OPEN_DIALOG) {
+            String nameFile = fileChooser.getSelectedFile().getName();
+            String nameFileExtended = fileChooser.getSelectedFile().toString();
+            StringBuilder builder = new StringBuilder();
+            HashMap<String, String> hashCommands = new ImportFile(nameFileExtended, nameFile).execute(inv);
+            hashCommands.entrySet().forEach(e -> {
+                tableModel.insertRow(0, new Object[]{e.getKey(), e.getValue()});
+            });
+        }
+    }
+
+    /**
+     *
+     * @return a JMenuBar from which the user can import or export files
+     * directly from their file/directory system
+     */
+    private JMenuBar createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuFile = new JMenu("File");
+        menuFile.setToolTipText("File Menu: Alt + F");
+        menuFile.setMnemonic(KeyEvent.VK_F);
+
+        //set font size to 18
+        menuFile.setFont(new Font(menuFile.getFont().toString(), Font.PLAIN, 18));
+
+        //add icons to import, export operations.
+        JMenuItem menuItemImport = new JMenuItem("Import...", new ImageIcon("./src/import16.png"));
+        JMenuItem menuItemExport = new JMenuItem("Export...", new ImageIcon("./src/export16.png"));
+        JMenuItem menuItemExit = new JMenuItem("Exit (X)");
+
+        //event menuItemImport
+        menuItemImport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    importFile();
+                } catch (FileExistException | UnsuitableFileException | TextOperationPresent | ElementNotAvailableException | notAcceptableValueException ex) {
+                    JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Attention:", JOptionPane.WARNING_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(rootPane, ex.getMessage(),
+                            "Error: ",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        //event menuItemExport
+        menuItemExport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveFile();
+            }
+        });
+        //event menuExit to close calculator app
+        menuItemExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int choose = JOptionPane.showConfirmDialog(rootPane, "Do you want closing app ?", "Exit: ", JOptionPane.OK_CANCEL_OPTION);
+                if (choose == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
+        menuFile.add(menuItemImport);
+        menuFile.add(menuItemExport);
+        menuFile.addSeparator();
+        menuFile.add(menuItemExit);
+
+        menuBar.add(menuFile);
+
+        return menuBar;
+    }
+
+    /**
+     * Verify the existence of file
+     *
+     * @throws FileExistException
+     */
+    private void checkFile() throws FileExistException {
+        if (fileChooser.getSelectedFile().exists()) {
+            throw new FileExistException("This file name is already used !");
+        }
+    }
+
+    /**
+     * Verify if there are elements by saving on a file
+     *
+     * @throws TableIsEmptyException
+     */
+    private void checkTableModel() throws TableIsEmptyException {
+        if (tableModel.getRowCount() == 0) {
+            throw new TableIsEmptyException("There aren't elements in user-defined table !");
+        }
+    }
+
+    /**
+     * save the User-defined operation model in a file choosen by user.
+     */
+    private void saveFile() {
+        int choose = fileChooser.showSaveDialog(rootPane);
+        if (choose == JFileChooser.APPROVE_OPTION) {
+            try {
+                String nameFile = fileChooser.getSelectedFile().getName();
+                String nameFileExtended = fileChooser.getSelectedFile().toString();
+                checkNameFile(nameFile);
+                checkFile();
+                checkTableModel();
+                StringBuilder builder = new StringBuilder();
+                builder.append("Name Operation:").append("\t\t").append("Operation commands:\n");
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    Object nameRow = tableModel.getValueAt(i, 0);
+                    Object nameCol = tableModel.getValueAt(i, 1);
+                    if (nameRow != null && nameCol != null) {
+                        builder.append(nameRow.toString()).append("\t\t\t").append(nameCol.toString()).append("\n");
+                    } else {
+                        break;
+                    }
+                    new SaverFile(nameFileExtended, builder.toString()).execute();
+                    JOptionPane.showMessageDialog(rootPane, "Save File completed !", "Information:", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (FileExistException | TableIsEmptyException ex) {
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Attention:", JOptionPane.WARNING_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(rootPane, "File operation not completed !",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (ExtensionFileException ex) {
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -870,13 +1084,13 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonSave;
-    private javax.swing.JButton ReloadFromFile;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton computeButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton dropButton;
     private javax.swing.JButton dupButton;
+    private javax.swing.JButton executeOperation;
     private javax.swing.JTextField inputField;
     private javax.swing.JButton insertButton;
     private javax.swing.JButton invertButton;
@@ -905,5 +1119,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton swap;
     private javax.swing.JTable table;
     private javax.swing.JTextArea textArea;
+    private javax.swing.JButton updateOperation;
     // End of variables declaration//GEN-END:variables
 }
