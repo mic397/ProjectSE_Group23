@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package Command;
+import ProjectException.UnderOneElementException;
+import ProjectException.UnderTwoElementsException;
+import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.*;
 
 
@@ -21,10 +24,16 @@ public class OverCommand implements Command{
         this.c = c;
     }
     
-    
+    /**
+     * 
+     * @return
+     * @throws UnderOneElementException
+     * @throws UnderTwoElementsException
+     * @throws stackIsEmptyException 
+     */
     @Override
-    public void execute() throws Exception {
-        c.over();
-        
+    public void execute() throws UnderOneElementException, UnderTwoElementsException, stackIsEmptyException  {
+       c.over();
     }
+
 }
