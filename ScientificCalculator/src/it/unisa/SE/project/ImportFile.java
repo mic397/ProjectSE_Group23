@@ -23,7 +23,6 @@ import java.util.Scanner;
  */
 public class ImportFile  {
     
-    private CommandInvoker command;
     private String nameFileExtended;
     private String nameFile;
     private File in;
