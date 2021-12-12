@@ -4,29 +4,27 @@
  * and open the template in the editor.
  */
 package Command;
+
+import ProjectException.UnderOneElementException;
+import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.*;
-
-
-
 
 /**
  *
  * @author Michela
  */
-public class DupCommand implements Command{
+public class DupCommand implements Command {
 
     private Calculator c;
-    
-    public DupCommand(Calculator c){
+
+    public DupCommand(Calculator c) {
         this.c = c;
     }
-    
-    
+
     @Override
-    public void execute() throws Exception {
+    public void execute() throws UnderOneElementException, stackIsEmptyException {
         c.dup();
-        
     }
 
-    
+
 }
