@@ -35,6 +35,16 @@ public class ImportFile  {
         this.scannerInput = new Scanner(in);
     }
 
+    /**
+     * 
+     * @param inv
+     * @return the hashMap read by file choosen
+     * @throws FileExistException
+     * @throws UnsuitableFileException
+     * @throws TextOperationPresent
+     * @throws ElementNotAvailableException
+     * @throws notAcceptableValueException 
+     */
     public HashMap<String, String> execute(CommandInvoker inv) throws FileExistException, UnsuitableFileException, TextOperationPresent, ElementNotAvailableException, notAcceptableValueException { 
         if(!in.exists())
             throw new FileExistException("This file does not exist !");
