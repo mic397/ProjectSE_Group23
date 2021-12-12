@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package Command;
+import ProjectException.UnderOneElementException;
+import ProjectException.UnderTwoElementsException;
+import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.*;
 
 
@@ -17,12 +20,16 @@ public class SwapCommand implements Command{
     public SwapCommand(Calculator c){
         this.c = c;
     }
-    
-    
+
+    /**
+     * 
+     * @throws UnderTwoElementsException
+     * @throws stackIsEmptyException
+     * @throws UnderOneElementException 
+     */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws UnderTwoElementsException, stackIsEmptyException, UnderOneElementException  {
         c.swap();
-        
     }
-    
+
 }
