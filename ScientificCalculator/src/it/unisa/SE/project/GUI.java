@@ -56,7 +56,7 @@ public class GUI extends javax.swing.JFrame {
      * this method generates toolTipCommands, to inform the user that he can use
      * various functions via the keyboard
      */
-    public final void setToolTipsForKeyCommand() {
+    private void setToolTipsForKeyCommand() {
         clearButton.setToolTipText("Delete all elements from the stack (Alt+Q)");
         clearButton.setMnemonic(KeyEvent.VK_Q);
         dropButton.setToolTipText("Remove the last inserted element from the stack (Alt+D)");
