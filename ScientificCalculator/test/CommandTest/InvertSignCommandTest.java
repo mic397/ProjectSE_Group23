@@ -18,7 +18,7 @@ import Command.CommandInvoker;
  */
 public class InvertSignCommandTest {
    private Calculator calc;
-   CommandInvoker inv;
+   private CommandInvoker inv;
     
     public InvertSignCommandTest() {
     }

@@ -24,7 +24,7 @@ public class DupCommandTest {
     private ComplexNumber number2;
     
     private Calculator calc;
-    CommandInvoker inv; 
+    private CommandInvoker inv; 
     
     public DupCommandTest() {
     }

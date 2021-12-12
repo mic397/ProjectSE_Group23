@@ -20,9 +20,9 @@ import static org.junit.Assert.*;
  */
 public class CommandInvokerTest {
     private Calculator calc;
-    CommandInvoker inv;
-     Map<String,String> mapFile;
-     Map<String,String> mapComm;
+    private CommandInvoker inv;
+    private Map<String,String> mapFile;
+    private Map<String,String> mapComm;
     public CommandInvokerTest() {
     }
    
@@ -89,28 +89,7 @@ public class CommandInvokerTest {
     
     
     
-     /**
-     * Test of save and reload Command 
-     * @throws Exception
-     * 
-     */
-    @Test
-    public void SaveAndReloadCommandTest() throws Exception{
-        String nameFile = "file.txt";
-        String nameOp = "op1";
-        String op = "+";
-      
-        mapFile.put(nameOp, op);
-        inv.saveCommand(mapFile,nameFile);
-        
-        mapFile.remove(nameOp,op);
-        
-        
-        mapFile=inv.reloadCommand(nameFile);
-        
-        assertEquals(op, mapFile.get(nameOp));
-      
-    }
+    
     
      /**
      * Test of executeCommand 

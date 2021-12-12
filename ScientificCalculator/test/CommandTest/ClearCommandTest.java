@@ -21,8 +21,8 @@ public class ClearCommandTest {
     private ComplexNumber number1;
     private ComplexNumber number2;
     
-      private Calculator calc;
-    CommandInvoker inv; 
+    private Calculator calc;
+    private CommandInvoker inv; 
     
     public ClearCommandTest() {
     }

@@ -23,9 +23,9 @@ import java.util.List;
  */
 public class UserDefinedCommandTest {
    private Calculator calc;
-   CommandInvoker inv;
-    UserDefinedCommand comm;
-    List<Command> comm1;
+   private CommandInvoker inv;
+   private UserDefinedCommand comm;
+   private List<Command> comm1;
     public UserDefinedCommandTest() {
     }
     
