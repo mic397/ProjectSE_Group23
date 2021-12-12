@@ -4,27 +4,30 @@
  * and open the template in the editor.
  */
 package Command;
+
+import ProjectException.UnderOneElementException;
+import ProjectException.stackIsEmptyException;
 import it.unisa.SE.project.*;
-
-
-
 
 /**
  *
  * @author Michela
  */
-public class DropCommand implements Command{
+public class DropCommand implements Command {
+
     private Calculator c;
-    
-    public DropCommand(Calculator c){
+
+    public DropCommand(Calculator c) {
         this.c = c;
     }
-    
-    
+
+    /**
+     * 
+     * @throws stackIsEmptyException
+     * @throws UnderOneElementException 
+     */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws stackIsEmptyException, UnderOneElementException {
         c.drop();
-        
     }
-    
 }
