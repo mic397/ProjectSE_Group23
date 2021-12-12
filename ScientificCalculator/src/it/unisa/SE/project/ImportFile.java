@@ -21,7 +21,7 @@ import java.util.Scanner;
  *
  * @author aniel
  */
-public class ImportFile implements Serializable {
+public class ImportFile  {
     
     private CommandInvoker command;
     private String nameFileExtended;
