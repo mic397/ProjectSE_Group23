@@ -14,6 +14,8 @@ The user stories were obtained trying to respect the customer's point of view ac
 format typically required by the Scrum methodology (As a… I want… so that I can…).
 A Trello board was used, at the following url:
 https://trello.com/b/KoUWrhdV/seprojectgroup23
+BURNDOWN CHART :
+https://BurndownForTrello.com/share/rzbn63dxhj
 
 All team members have access to it . A score was assigned to each user story, defining it in an
 online meeting between team members The Planning Poker mode was used, through the
